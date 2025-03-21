@@ -6,6 +6,6 @@ public interface IIDTag {
 
     public boolean isSameTag(IIDTag tag);
 
-    public boolean isSameTagType(IIDTag tag);
+    public boolean isSameTagType(Class<IIDTag> tagEnum);
 
 }
