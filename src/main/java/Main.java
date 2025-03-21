@@ -1,10 +1,10 @@
+import Interfaces.IIDTag;
+
 public class Main {
-    public String testTester(int num) {
-        if (num > 0) {
-            return "greater than 0";
-        } else {
-            return "less than or equal to 0";
-        }
+    public static void main(String[] args) {
+        String[] myStrings = {"a", "b", "c"};
+
+        IID myIID = new IID(myStrings);
     }
 
 
