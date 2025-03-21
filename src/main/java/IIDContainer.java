@@ -1,25 +1,24 @@
-import Interfaces.IIDInterface;
+import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-public class IID implements IIDInterface {
+public class IIDContainer implements IIDContainerInterface {
 
     private List<IIDTag> tags;
     private String iidString;
 
-    public IID() {
-
+    public IIDContainer() {
+        this.tags = new ArrayList<IIDTag>();
     }
 
-    public IID(IIDTag[] tags) {
+    public IIDContainer(IIDTag[] tags) {
         this(Arrays.asList(tags));
     }
 
-    public IID(List<IIDTag> tags) {
+    public IIDContainer(List<IIDTag> tags) {
         this.tags = new ArrayList<IIDTag>();
         for (IIDTag tag : tags) {
             tags.add(tag);
@@ -33,22 +32,27 @@ public class IID implements IIDInterface {
     }
 
     @Override
-    public boolean isIID() {
-        return false;
+    public boolean isIID(IIDContainer iidContainer) {
+        return tags.containsAll(iidContainer.getTags());
     }
 
     @Override
     public ArrayList<IIDTag> getTags() {
-        return null;
+        return new ArrayList<IIDTag>(tags);
     }
 
     @Override
     public boolean hasTag(IIDTag tag) {
-        return false;
+        return tags.contains(tag);
     }
 
     @Override
-    public IIDTag getTag(IIDTag tag) {
+    public IIDTag getTag(Class<IIDTag> tagEnum) {
+        for (IIDTag tag : tags) {
+            if (tag.isSameTagType(tagEnum)) {
+                return tag;
+            }
+        }
         return null;
     }
 

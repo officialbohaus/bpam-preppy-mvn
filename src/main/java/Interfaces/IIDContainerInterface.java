@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.util.ArrayList;
 
-public interface IIDInterface {
+public interface IIDContainerInterface {
 
     public String getIIDString();
 
