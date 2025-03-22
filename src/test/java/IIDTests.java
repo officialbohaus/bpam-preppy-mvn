@@ -206,6 +206,15 @@ public class IIDTests {
 
         // a manually unlocked container should remain unlocked
         IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        assertFalse(testContainer.isLocked());
+        testContainer.addNameTag("");
+        testContainer.addNameTag("TestFood2");
+        assertFalse(testContainer.isLocked());
+        testContainer.addTag(CutState.GROUND);
+        assertFalse(testContainer.isLocked());
+        testContainer.lock();
+        assertTrue(testContainer.isLocked());
 
     }
     // Available Methods & Variables (via Lock Tests) ==========================================
