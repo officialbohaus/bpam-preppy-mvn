@@ -21,6 +21,11 @@ public class   IIDContainer implements IIDContainerInterface {
     Only one tag can be held for each tag type.
     The nameTag and descriptorTag are also important tags, but they are defined as Strings instead of enums.
     Because of this, they are not kept in the "tags" list-- but they should still be considered tags in any methods interacting with tags.
+
+    The IIDContainer toggles between locked and unlocked states.
+        You may only "get" values when the container is locked
+        You may only "set" values when the container is unlocked
+        An invalid IID will not be allowed to lock
      */
 
     // critialTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
@@ -36,6 +41,7 @@ public class   IIDContainer implements IIDContainerInterface {
 
     private String iidString;
     private boolean validIID;
+    private boolean locked;
 
     // Constructors ==============================================================
 
@@ -63,21 +69,25 @@ public class   IIDContainer implements IIDContainerInterface {
         this.addTags(tags);
         this.validIID = verifyValidIID();
         this.containerID = ++containerCount;
+        this.locked = validIID;
     }
 
     // Getters ====================================================================
     @Override
     public String getIIDString() {
+        guardGet();
         return null;
     }
 
     @Override
     public ArrayList<IIDTag> getTags() {
+        guardGet();
         return new ArrayList<IIDTag>(tags);
     }
 
     @Override
     public <T extends IIDTag> IIDTag getTag(Class<T> tagEnum) {
+        guardGet();
         for (IIDTag tag : tags) {
             if (tag.getClass().equals(tagEnum))
                 return tag;
@@ -87,17 +97,25 @@ public class   IIDContainer implements IIDContainerInterface {
 
     @Override
     public String getNameTag() {
+        guardGet();
         return nameTag;
     }
 
     @Override
     public String getDescriptorTag() {
+        guardGet();
         return descriptorTag;
     }
 
     @Override
     public String getNickname() {
+        guardGet();
         return nicknameTag;
+    }
+
+    public int getContainerID() {
+        guardGet();
+        return containerID;
     }
 
     // Checkers =======================================================
@@ -117,6 +135,7 @@ public class   IIDContainer implements IIDContainerInterface {
     // Setters ========================================================
     @Override
     public void addTag(IIDTag tag) {
+        guardSet();
         Iterator<IIDTag> tagsIter = tags.iterator();
         boolean foundTag = false;
         while (tagsIter.hasNext() && !foundTag) {
@@ -132,6 +151,7 @@ public class   IIDContainer implements IIDContainerInterface {
     }
 
     public void addNameTag(String nameTag) {
+        guardSet();
         if (!(this.nameTag == null || this.nameTag.isEmpty())) {
             System.out.println("Overwriting nameTag: " + this.nameTag + " for new value: " + nameTag);
         }
@@ -140,6 +160,7 @@ public class   IIDContainer implements IIDContainerInterface {
     }
 
     public void addDescriptorTag(String descriptorTag) {
+        guardSet();
         if (!(this.descriptorTag == null || this.descriptorTag.isEmpty())) {
             System.out.println("Overwriting descriptorTag: " + this.descriptorTag + " for new value: " + descriptorTag);
         }
@@ -148,6 +169,7 @@ public class   IIDContainer implements IIDContainerInterface {
     }
 
     public void addNicknameTag(String nicknameTag) {
+        guardSet();
         if (!(this.nicknameTag == null || this.nicknameTag.isEmpty())) {
             System.out.println("Overwriting nicknameTag: " + this.nicknameTag + " for new value: " + nicknameTag);
         }
@@ -156,9 +178,21 @@ public class   IIDContainer implements IIDContainerInterface {
 
     @Override
     public void addTags(List<IIDTag> tags) {
+        guardSet();
         for (IIDTag tag : tags) {
             addTag(tag);
         }
+    }
+
+    public boolean isLocked() { return locked; }
+
+    public void lock() throws IllegalStateException {
+        if (!validIID) { throw new IllegalStateException("Cannot lock IIDContainer because IID is invalid"); }
+        locked = true;
+    }
+
+    public void unlock() {
+        locked = false;
     }
 
     // Helpers =========================================================
@@ -176,6 +210,14 @@ public class   IIDContainer implements IIDContainerInterface {
             if (!foundClass) { return false; }
         }
         return true;
+    }
+
+    private void guardGet() {
+        if (!locked) { throw new IllegalStateException("Cannot get value while IIDContainer is unlocked!"); }
+    }
+
+    private void guardSet() {
+        if (locked) { throw new IllegalStateException("Cannot set value while IIDContainer is locked!"); }
     }
 
     @Override

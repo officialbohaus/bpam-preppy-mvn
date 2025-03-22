@@ -84,4 +84,108 @@ public class IIDTests {
     private IIDContainer getNoNameTagNoDescriptorTagIIDContainer() { return new IIDContainer(validTagsArray); }
     private IIDContainer getNoNameTagIIDContainer() { return new IIDContainer("", "Steamed Gruel", validTagsArray); }
 
+    // Lock Tests ==============================================================================
+    @Test
+    public void isLockedTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void lockTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void unlockTest() {
+        fail("Not yet implemented");
+    }
+    // Available Methods & Variables (via Lock Tests) ==========================================
+
+
+    // Get Tests ====================================================
+    @Test
+    public void getIIDStringTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getTagsTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getNameTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getDescriptorTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getNicknameTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void getContainerIDTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void toStringTest() {
+        fail("Not yet implemented");
+    }
+    // Available Methods & Variables (via Get Tests) ===========================================
+
+    // Checkers Tests ==========================================================================
+    @Test
+    public void isIIDTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void hasTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void isValidIIDTest() {
+        fail("Not yet implemented");
+    }
+
+    // Available Methods & Variables (via Checkers Tests) ========================================
+
+    // Setters Tests =============================================================================
+    @Test
+    public void addTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void addNameTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void addDescriptorTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void addNicknameTagTest() {
+        fail("Not yet implemented");
+    }
+
+    @Test
+    public void addTagsTest() {
+        fail("Not yet implemented");
+    }
+
 }
