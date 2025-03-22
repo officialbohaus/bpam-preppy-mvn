@@ -14,8 +14,6 @@ import java.util.List;
 public class   IIDContainer implements IIDContainerInterface {
     /*
     The IIDContainer Class represents an object that holds all the components to an IID.
-    The tags of an IID in this container are not locked, for the locked version use a StaticIID object.
-    Thus, this object should not be assigned to a variable describing a specific food object.
 
     In order for the IIDContainer to have a valid IID, it must have one of each tag listed in the "criticalTags" variable below.
     Only one tag can be held for each tag type.
@@ -26,6 +24,9 @@ public class   IIDContainer implements IIDContainerInterface {
         You may only "get" values when the container is locked
         You may only "set" values when the container is unlocked
         An invalid IID will not be allowed to lock
+        If an IIDContainer is constructed with an invalid IID the default state will be unlocked.
+            The container will automatically lock the first time a valid IID is contained
+        Similarly, if an IIDContainer is constructed with a valid IID, the default state will be locked.
      */
 
     // critialTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
@@ -42,6 +43,7 @@ public class   IIDContainer implements IIDContainerInterface {
     private String iidString;
     private boolean validIID;
     private boolean locked;
+    private boolean hasNeverLocked;
 
     // Constructors ==============================================================
 
@@ -70,6 +72,7 @@ public class   IIDContainer implements IIDContainerInterface {
         this.validIID = verifyValidIID();
         this.containerID = ++containerCount;
         this.locked = validIID;
+        this.hasNeverLocked = !locked;
     }
 
     // Getters ====================================================================
@@ -188,10 +191,12 @@ public class   IIDContainer implements IIDContainerInterface {
 
     public void lock() throws IllegalStateException {
         if (!validIID) { throw new IllegalStateException("Cannot lock IIDContainer because IID is invalid"); }
+        if (locked) { throw new IllegalStateException("Cannot lock a locked IIDContainer!"); }
         locked = true;
     }
 
-    public void unlock() {
+    public void unlock() throws IllegalStateException {
+        if (!locked) { throw new IllegalStateException("Cannot unlock an unlocked IIDContainer!"); }
         locked = false;
     }
 
@@ -208,6 +213,11 @@ public class   IIDContainer implements IIDContainerInterface {
                 if (currTagClass.equals(classType)) { foundClass = true; }
             }
             if (!foundClass) { return false; }
+        }
+        if (hasNeverLocked) {
+            System.out.println("Valid IID detected, automatically locking IIDContainer #" + containerID);
+            locked = true;
+            hasNeverLocked = false;
         }
         return true;
     }

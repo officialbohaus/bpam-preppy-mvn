@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,6 +62,7 @@ public class IIDTests {
         assertFalse(testContainer.isValidIID());
         testContainer.addNameTag("TestFood");
         assertTrue(testContainer.isValidIID());
+        testContainer.unlock();
         testContainer.addNameTag("TestFood2");
         assertTrue(testContainer.isValidIID());
         testContainer.addNameTag("");
@@ -73,6 +75,7 @@ public class IIDTests {
         assertFalse(testContainer.isValidIID());
         testContainer.addDescriptorTag("Steamed Gruel");
         assertTrue(testContainer.isValidIID());
+        testContainer.unlock();
         testContainer.addDescriptorTag("Over-steamed Gruel");
         assertTrue(testContainer.isValidIID());
         testContainer.addDescriptorTag("");
@@ -87,17 +90,123 @@ public class IIDTests {
     // Lock Tests ==============================================================================
     @Test
     public void isLockedTest() {
-        fail("Not yet implemented");
+        // should default to unlocked from incomplete constructions
+        assertFalse(getNoNameTagIIDContainer().isLocked());
+        assertFalse((new IIDContainer()).isLocked());
+        assertFalse((new IIDContainer(validTagsArray)).isLocked());
+        assertFalse((new IIDContainer("","",validTagsArray)).isLocked());
+        assertFalse((new IIDContainer("","",underValidTagsArray)).isLocked());
+        assertFalse((new IIDContainer("","",overValidTagsArray)).isLocked());
+        assertFalse((new IIDContainer("TestFood","",overValidTagsArray)).isLocked());
+        assertFalse((new IIDContainer("TestFood","Steamed Gruel",underValidTagsArray)).isLocked());
+
+        // should default to locked from complete constructions
+        assertTrue(getValidIIDContainer().isLocked());
+
+        // should autolock once valid IID is stored if container has never locked (defaulted to unlocked)
+        IIDContainer testContainer = getNoNameTagIIDContainer();
+        assertFalse(testContainer.isLocked()); // verify it is unlocked
+        testContainer.addNameTag(""); // adds invalid nameTag
+        assertFalse(testContainer.isLocked()); // should still be locked, still holds an incomplete IID
+        testContainer.addNameTag("TestFood"); // this should cause container to lock, as this completes the contained IID
+        assertTrue(testContainer.isLocked());
     }
 
     @Test
     public void lockTest() {
-        fail("Not yet implemented");
+        // should not be able to lock container holding incomplete IID
+        assertThrows(IllegalStateException.class, () -> {
+            IIDContainer testContainer = getNoNameTagIIDContainer();
+            testContainer.lock();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            IIDContainer testContainer = getValidIIDContainer();
+            testContainer.unlock();
+            testContainer.addNameTag("");
+            testContainer.lock();
+        });
+
+        // should not be able to lock container that is already locked
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().lock();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            IIDContainer testContainer = getNoNameTagIIDContainer();
+            testContainer.addNameTag("TestFood");
+            testContainer.lock();
+        });
+
+        // should not be able to unlock container that is already unlocked
+        assertThrows(IllegalStateException.class, () -> {
+            getNoNameTagIIDContainer().unlock();
+        });
+
+        // should not allow setting access when locked
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().addTag(CutState.GROUND);
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().addNameTag("TestFood2");
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().addDescriptorTag("Over-steamed Gruel");
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().addNicknameTag("Mom's favorite");
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            getValidIIDContainer().addTags(List.of(CutState.NONE, CookState.NONE));
+        });
+
+        // should allow getting access when locked
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getTag(CutState.class);
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getTags();
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getDescriptorTag();
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getNameTag();
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getNickname();
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getContainerID();
+        });
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().getIIDString();
+        });
     }
 
     @Test
     public void unlockTest() {
-        fail("Not yet implemented");
+        // should not be able to unlock an unlocked container
+        assertThrows(IllegalStateException.class, () -> {
+            getNoNameTagIIDContainer().unlock();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            IIDContainer testContainer = getValidIIDContainer();
+            testContainer.unlock();
+            testContainer.unlock();
+        });
+
+        // should be able to unlock a locked container
+        assertDoesNotThrow(() -> {
+            getValidIIDContainer().unlock();
+        });
+        assertDoesNotThrow(() -> {
+            IIDContainer testContainer = getNoNameTagIIDContainer();
+            testContainer.addNameTag("TestFood");
+            testContainer.unlock();
+        });
+
+        // a manually unlocked container should remain unlocked
+        IIDContainer testContainer = getValidIIDContainer();
+
     }
     // Available Methods & Variables (via Lock Tests) ==========================================
 
