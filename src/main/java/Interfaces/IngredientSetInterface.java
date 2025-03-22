@@ -1,6 +1,7 @@
 package Interfaces;
 
 import java.util.ArrayList;
+import Others.IngredientSet;
 
 public interface IngredientSetInterface {
     public ArrayList<String> getIngredients();

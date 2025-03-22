@@ -1,4 +1,13 @@
-public class CookAndCutAndShit {
+package Others;
+
+import Exceptions.InvalidRequestException;
+import Interfaces.CookInterface;
+import Interfaces.CutInterface;
+import Tags.CookState;
+import Tags.CutState;
+import Interfaces.IIDTag;
+
+public class CookAndCutAndShit implements CookInterface, CutInterface {
     private String[] IIDTags;
     static final String IID_ORDER = "name-ingtype-cook-cut-unit";
     private final int COOK_INDEX = 4;
@@ -137,7 +146,7 @@ public class CookAndCutAndShit {
             case CookState.NONE:
                 return "THIS SHOULDN'T BE NONE.";
             default:
-                return "COOK ENUM NOT FOUND";
+                throw new InvalidRequestException();
         }
     }
 

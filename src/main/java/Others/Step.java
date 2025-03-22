@@ -1,3 +1,5 @@
+package Others;
+
 import Exceptions.InvalidIIDException;
 import Exceptions.InvalidRequestException;
 import Interfaces.IIDTag;
@@ -83,12 +85,8 @@ public class Step extends CookAndCutAndShit {
 
         // if IIDTagOut != raw and IID cook state != raw, throw exception
         // trying to cook a cooked item
-        // if ((IIDParser.getCookStateEnum(IID) != CookState.RAW) && (IIDTagOut != CookState.RAW)) {
+        // if ((Others.IIDParser.getCookStateEnum(IID) != CookState.RAW) && (IIDTagOut != CookState.RAW)) {
         //     throw new InvalidRequestException("ITEM IS ALREADY COOKED");
-        // }
-
-        // if ((IIDParser.getCutStateEnum(IID)) != CutState.WHOLE) {
-        //     throw new InvalidRequestException("ITEM IS ALREADY CUT");
         // }
     }
 

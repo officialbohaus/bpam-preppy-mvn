@@ -1,3 +1,5 @@
+package Others;
+
 import Interfaces.IngredientSetInterface;
 
 import java.util.ArrayList;
@@ -5,18 +7,18 @@ import java.util.Iterator;
 
 public class IngredientSet implements IngredientSetInterface, Iterable<String> {
     /*
-     * The IngredientSet represents a collection of ingredients.
+     * The Others.IngredientSet represents a collection of ingredients.
      * - This class is intended to be used to group IIDs together as needed by user (we are the users).
      *      - The relation between IIDs can be described in the description String, if desired
      *      - e.g. all IIDs related to a recipe, etc.
      * - The set does not need to maintain a quantity for any IID
-     * - This class should have a method that compares it to another IngredientSet, returning the
+     * - This class should have a method that compares it to another Others.IngredientSet, returning the
      *   differences between the two.
      *      - For now, lets return a String array with each difference found. Example:
      *          [Chicken-Pr-Raw --> Chicken-Pr-Bake]
      *          [     OTHER-IID --> THIS-IID       ]
-     * - Should be able to add and remove IIDs from IngredientSet
-     * - Should return a COPY of the IngredientSet array
+     * - Should be able to add and remove IIDs from Others.IngredientSet
+     * - Should return a COPY of the Others.IngredientSet array
      *      - return a copy, because returning the actual array will break encapsulation.
      * - Should have a description String that the user can choose to fill
      *      - This description should describe what relation all the IIDs have
@@ -38,11 +40,11 @@ public class IngredientSet implements IngredientSetInterface, Iterable<String> {
         this("", (String[]) null);
     }
 
-    // public IngredientSet(String description) {
+    // public Others.IngredientSet(String description) {
     //     this("", (String[]) null);
     // }
 
-    // public IngredientSet(String... IIDs) {
+    // public Others.IngredientSet(String... IIDs) {
     //     this("", IIDs);
     // }
 
