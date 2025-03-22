@@ -17,6 +17,9 @@ public class Main {
         System.out.println(myContainer.isValidIID());
         myContainer.addTag(IngredientUnit.MILLILITER);
         System.out.println(myContainer.isValidIID());
+        myContainer.addTag(CutState.GROUND);
+        System.out.println(myContainer.isValidIID());
+        System.out.println(myContainer);
     }
 
 
