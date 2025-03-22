@@ -1,3 +1,5 @@
+package Others;
+
 import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 import Tags.CookState;
@@ -5,7 +7,6 @@ import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
 
-import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
