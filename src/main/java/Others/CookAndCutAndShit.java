@@ -151,6 +151,7 @@ public class CookAndCutAndShit implements CookInterface, CutInterface {
 //    }
 
     public String cook(String IID, IIDTag cookState) {
+        if (!(cookState instanceof CookState)) { throw new InvalidRequestException(); }
         switch(cookState) {
             case CookState.RAW:
                 return "THIS SHOULDN'T BE RAW.";
