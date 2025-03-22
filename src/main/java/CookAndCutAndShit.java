@@ -1,8 +1,4 @@
-import Interfaces.CookInterface;
-import Interfaces.CutInterface;
-import Tags.CookState;
-
-public class CookAndCutAndShit implements CookInterface, CutInterface {
+public class CookAndCutAndShit {
     private String[] IIDTags;
     static final String IID_ORDER = "name-ingtype-cook-cut-unit";
     private final int COOK_INDEX = 4;

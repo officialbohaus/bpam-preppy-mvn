@@ -1,8 +1,22 @@
+import Interfaces.IIDTag;
+import Tags.CookState;
+import Tags.CutState;
+import Tags.IngredientType;
+import Tags.IngredientUnit;
+
 public class Main {
     public static void main(String[] args) {
         String[] myStrings = {"a", "b", "c"};
 
-        IIDContainer myIIDContainer = new IIDContainer(myStrings);
+        System.out.println(CookState.RAW.isSameTagType(CutState.class));
+
+        IIDContainer myContainer = new IIDContainer(new IIDTag[]{CookState.BOILED,CutState.CHOPPED});
+        System.out.println(myContainer.getTag(CutState.class));
+        System.out.println(myContainer.isValidIID());
+        myContainer.addTag(IngredientType.BAKING);
+        System.out.println(myContainer.isValidIID());
+        myContainer.addTag(IngredientUnit.MILLILITER);
+        System.out.println(myContainer.isValidIID());
     }
 
 
