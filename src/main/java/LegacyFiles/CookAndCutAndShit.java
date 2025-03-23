@@ -1,4 +1,4 @@
-package Others;
+package LegacyFiles;
 
 import Exceptions.InvalidRequestException;
 import Interfaces.CookInterface;

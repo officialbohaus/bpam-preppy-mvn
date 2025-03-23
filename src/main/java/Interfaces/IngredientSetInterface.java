@@ -1,7 +1,6 @@
 package Interfaces;
 
 import java.util.ArrayList;
-import Others.IngredientSet;
 
 public interface IngredientSetInterface {
     public ArrayList<String> getIngredients();
@@ -10,7 +9,7 @@ public interface IngredientSetInterface {
 
     public String getDescription();
 
-    public ArrayList<String> compare(IngredientSet otherSet);
+    public ArrayList<String> compare(IngredientSetInterface otherSet);
 
     public boolean contains(String IID);
 
