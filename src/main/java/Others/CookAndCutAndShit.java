@@ -119,37 +119,6 @@ public class CookAndCutAndShit implements CookInterface, CutInterface {
         return newIID;
     }
 
-//    public String cook(String IID, IIDTag cookState) {
-//        switch(cookState) {
-//            case CookState.RAW:
-//                return "THIS SHOULDN'T BE RAW.";
-//            case CookState.BAKED:
-//                return bake(IID);
-//            case CookState.FRIED:
-//                return fry(IID);
-//            case CookState.SAUTEED:
-//                return sautee(IID);
-//            case CookState.GRILLED:
-//                return grill(IID);
-//            case CookState.ROASTED:
-//                return roast(IID);
-//            case CookState.SMOKED:
-//                return smoke(IID);
-//            case CookState.STEWED:
-//                return stew(IID);
-//            case CookState.STEAMED:
-//                return steam(IID);
-//            case CookState.TOASTED:
-//                return toast(IID);
-//            case CookState.BOILED:
-//                return boil(IID);
-//            case CookState.NONE:
-//                return "THIS SHOULDN'T BE NONE.";
-//            default:
-//                throw new InvalidRequestException();
-//        }
-//    }
-
     public String cook(String IID, IIDTag cookState) {
         if (!(cookState instanceof CookState)) { throw new InvalidRequestException(); }
         switch(cookState) {
