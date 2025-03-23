@@ -30,7 +30,7 @@ public class   IIDContainer implements IIDContainerInterface {
         Similarly, if an IIDContainer is constructed with a valid IID, the default state will be locked.
      */
 
-    // critialTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
+    // criticalTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
     public static final Class<? extends IIDTag>[] criticalTags = new Class[] {IngredientType.class, IngredientUnit.class, CutState.class, CookState.class};
 
     private final List<IIDTag> tags;
