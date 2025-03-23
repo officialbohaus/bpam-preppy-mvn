@@ -228,12 +228,14 @@ public class IIDTests {
 
     @Test
     public void getTagsTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        ArrayList<IIDTag> tagContainer = testContainer.getTags();
+        assertArrayEquals(validTagsArray, tagContainer.toArray());
     }
 
     @Test
     public void getTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
     }
 
     @Test
