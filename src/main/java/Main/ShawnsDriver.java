@@ -1,6 +1,8 @@
-package Others;
+package Main;
 
 import Interfaces.IIDTag;
+import LegacyFiles.IIDGenerator;
+import LegacyFiles.Step;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;

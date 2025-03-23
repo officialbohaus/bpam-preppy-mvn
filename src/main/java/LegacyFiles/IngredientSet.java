@@ -1,4 +1,4 @@
-package Others;
+package LegacyFiles;
 
 import Interfaces.IngredientSetInterface;
 
@@ -70,6 +70,11 @@ public class IngredientSet implements IngredientSetInterface, Iterable<String> {
     public String getDescription() { return description; }
 
     @Override
+    public ArrayList<String> compare(IngredientSetInterface otherSet) {
+        return null;
+    }
+
+
     public ArrayList<String> compare(IngredientSet otherSet) {
         // this will be the string list that holds each difference
         ArrayList<String> differenceList = new ArrayList<String>();

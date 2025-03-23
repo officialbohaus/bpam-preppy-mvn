@@ -1,4 +1,4 @@
-package Others;
+package LegacyFiles;
 
 import Exceptions.InvalidIIDException;
 import Exceptions.InvalidRequestException;

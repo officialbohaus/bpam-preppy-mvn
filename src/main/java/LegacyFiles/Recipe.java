@@ -1,4 +1,4 @@
-package Others;
+package LegacyFiles;
 
 import Exceptions.InvalidIIDException;
 import Exceptions.InvalidQuantityException;
@@ -68,17 +68,17 @@ public class Recipe implements RecipeInterface {
         return ingredientQuantity.get(ingredients.indexOf(IID));
     }
 
-    @Override
+
     public void setIngredient(String name) {
 
     }
 
-    @Override
+
     public String getIngredient() {
         return "";
     }
 
-    @Override
+
     public void steps() {
 
     }
