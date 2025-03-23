@@ -31,11 +31,12 @@ public class   IIDContainer implements IIDContainerInterface {
      */
 
     // critialTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
-    public static final Class<? extends IIDTag>[] criticalTags = new Class[] {IngredientType.class, IngredientUnit.class, CutState.class, CookState.class};
+    private static final Class<? extends IIDTag>[] criticalTags = new Class[] {IngredientType.class, IngredientUnit.class, CutState.class, CookState.class};
 
     private final List<IIDTag> tags;
     private static int containerCount = 0;
     private final int containerID;
+    private int modCount;
     private String nameTag;
     private String descriptorTag;
 
@@ -74,6 +75,7 @@ public class   IIDContainer implements IIDContainerInterface {
         this.containerID = ++containerCount;
         this.locked = validIID;
         this.hasNeverLocked = !locked;
+        this.modCount = 0;
     }
 
     // Getters ====================================================================
@@ -122,6 +124,11 @@ public class   IIDContainer implements IIDContainerInterface {
         return containerID;
     }
 
+    public int getModCount() {
+        guardGet();
+        return modCount;
+    }
+
     // Checkers =======================================================
     @Override
     public boolean isIID(IIDContainerInterface iidContainer) {
@@ -151,6 +158,7 @@ public class   IIDContainer implements IIDContainerInterface {
             }
         }
         tags.add(tag);
+        modCount++;
         this.validIID = verifyValidIID();
     }
 
@@ -160,6 +168,7 @@ public class   IIDContainer implements IIDContainerInterface {
             System.out.println("Overwriting nameTag: " + this.nameTag + " for new value: " + nameTag);
         }
         this.nameTag = nameTag;
+        modCount++;
         this.validIID = verifyValidIID();
     }
 
@@ -169,6 +178,7 @@ public class   IIDContainer implements IIDContainerInterface {
             System.out.println("Overwriting descriptorTag: " + this.descriptorTag + " for new value: " + descriptorTag);
         }
         this.descriptorTag = descriptorTag;
+        modCount++;
         this.validIID = verifyValidIID();
     }
 
@@ -177,6 +187,7 @@ public class   IIDContainer implements IIDContainerInterface {
         if (!(this.nicknameTag == null || this.nicknameTag.isEmpty())) {
             System.out.println("Overwriting nicknameTag: " + this.nicknameTag + " for new value: " + nicknameTag);
         }
+        modCount++;
         this.nicknameTag = nicknameTag;
     }
 
