@@ -4,34 +4,32 @@ import Interfaces.IngredientSetInterface;
 import LegacyFiles.IIDParser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
-public class IngredientSet implements IngredientSetInterface {
+public class IngredientSet {
 
-    public IngredientSet()
+    private ArrayList<IIDContainer> ingredientSet;
+    private String name, description;
 
-    @Override
-    public ArrayList<String> getIngredients() {
-        return null;
+    public IngredientSet(IIDContainer[] iidContainerArray) {
+        this(new ArrayList<>(Arrays.asList(iidContainerArray)));
     }
 
-    @Override
-    public void remove(String IID) {
-
+    public IngredientSet(ArrayList<IIDContainer> iidContainerArrayList) {
+        ingredientSet = new ArrayList<>();
+        ingredientSet.addAll(iidContainerArrayList);
     }
 
-    @Override
-    public String getDescription() {
-        return "";
+    public void addIngredient(IIDContainer ingredient) {
+        ingredientSet.add(ingredient);
     }
 
-    @Override
-    public ArrayList<String> compare(IngredientSetInterface otherSet) {
-        return null;
+    public ArrayList<IIDContainer> getIngredientSet() {
+        return ingredientSet;
     }
 
-    @Override
-    public boolean contains(String IID) {
-        return false;
+    public int getIngredientIndex(IIDContainer ingredient) {
+        return ingredientSet.indexOf(ingredient);
     }
 }
