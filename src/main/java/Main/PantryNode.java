@@ -6,12 +6,23 @@ import Interfaces.IIDTag;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+/**
+ * <code>PantryNode</code> pairs an <code>IIDContainer</code> with a quantity.
+ * <p>
+ * It provides pass-through methods to access the <code>IIDContainer</code>, but will throw an exception
+ * if the referenced container is modified in any way.
+ *
+ */
 public class PantryNode implements IIDContainerInterface {
 
     private final IIDContainer iidContainer;
     private final int validModCount;
     private int quantity;
 
+
+    /**
+     * @param iidContainer the <code>IIDContainer</code> to be paired with this node
+     */
     public PantryNode(IIDContainer iidContainer) {
         this(iidContainer, 0);
     }
