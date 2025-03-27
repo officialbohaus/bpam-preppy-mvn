@@ -17,6 +17,7 @@ public class IIDTests {
 
     // Constructor Tests ==============================================
     // TODO: all constructors need testing
+    // <editor-fold desc="Constructor Tests Fold">
     @Test
     public void EmptyConstructorTests() {
         assertDoesNotThrow(() -> { emptyIIDContainer(); });
@@ -40,15 +41,17 @@ public class IIDTests {
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(underValidTagsArray)); });
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(overValidTagsArray)); });
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Constructor Tests) ======================================
-    private IIDContainer emptyIIDContainer() { return new IIDContainer(); }
-    private final IIDTag[] validTagsArray = new IIDTag[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
-    private final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
-    private final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
+    private static IIDContainer emptyIIDContainer() { return new IIDContainer(); }
+    private static final IIDTag[] validTagsArray = new IIDTag[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
+    private static final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
+    private static final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
+
 
 
     // Validity Tests ================================================
+    // <editor-fold desc="Validity Tests Fold">
     @Test
     public void emptyIIDContainerValidityTests() {
         // an IIDContainer holds a valid IID if it has one of each critical tag, and a nonempty nameTag and descriptorTag
@@ -82,15 +85,17 @@ public class IIDTests {
         testContainer.addDescriptorTag("");
         assertFalse(testContainer.isValidIID());
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Validity Tests) ===========================
-    private String validNameTag = "TestFood";
-    private String validDescriptorTag = "Steamed Gruel";
-    private IIDContainer getValidIIDContainer() { return new IIDContainer(validNameTag, validDescriptorTag, validTagsArray); }
-    private IIDContainer getNoNameTagNoDescriptorTagIIDContainer() { return new IIDContainer(validTagsArray); }
-    private IIDContainer getNoNameTagIIDContainer() { return new IIDContainer("", validDescriptorTag, validTagsArray); }
+    private static final String validNameTag = "TestFood";
+    private static final String validDescriptorTag = "Steamed Gruel";
+    public static IIDContainer getValidIIDContainer() { return new IIDContainer(validNameTag, validDescriptorTag, validTagsArray); }
+    private static IIDContainer getNoNameTagNoDescriptorTagIIDContainer() { return new IIDContainer(validTagsArray); }
+    private static IIDContainer getNoNameTagIIDContainer() { return new IIDContainer("", validDescriptorTag, validTagsArray); }
+
 
     // Lock Tests ==============================================================================
+    // <editor-fold desc="Lock Tests Fold">
     @Test
     public void isLockedTest() {
         // should default to unlocked from incomplete constructions
@@ -220,10 +225,14 @@ public class IIDTests {
         assertTrue(testContainer.isLocked());
 
     }
+    // </editor-fold>
     // Available Methods & Variables (via Lock Tests) ==========================================
 
 
+
     // Get Tests ====================================================
+    // TODO: Finish
+    // <editor-fold desc="Get Tests Fold">
     @Test
     public void getIIDStringTest() {
         fail("Not yet implemented");
@@ -288,9 +297,13 @@ public class IIDTests {
         assertEquals(expectedTest, testContainer.toString());
         assertNotNull(expectedTest);
     }
+    // </editor-fold>
     // Available Methods & Variables (via Get Tests) ===========================================
 
+
+
     // Checkers Tests ==========================================================================
+    // <editor-fold desc="Checkers Tests Fold">
     @Test
     public void isIIDTest() {
         IIDContainer testContainer = getValidIIDContainer();
@@ -322,10 +335,13 @@ public class IIDTests {
         IIDContainer falseContainer2 = getNoNameTagNoDescriptorTagIIDContainer();
         assertFalse(falseContainer2.isValidIID());
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Checkers Tests) ========================================
 
+
+
     // Setters Tests =============================================================================
+    // <editor-fold desc="Setters Tests Fold">
     @Test
     public void addTagTest() {
         IIDContainer testContainer = getValidIIDContainer();
@@ -377,5 +393,7 @@ public class IIDTests {
     public void addTagsTest() {
 
     }
+
+    // </editor-fold>
 
 }
