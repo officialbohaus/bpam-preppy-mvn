@@ -23,7 +23,7 @@ public interface IngredientSetInterface {
 
     public void remove(IIDContainer iidContainer);
 
-    public void remove(IIDContainer[] iidContainers);
+    public void remove(IIDContainer... iidContainers);
 
     public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet);
 

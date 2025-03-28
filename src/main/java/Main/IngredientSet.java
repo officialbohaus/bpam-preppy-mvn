@@ -97,7 +97,7 @@ public class IngredientSet implements IngredientSetInterface {
         ingredientSet.remove(ingredient);
     }
 
-    public void remove(IIDContainer[] ingredients) {
+    public void remove(IIDContainer... ingredients) {
         ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
         for (IIDContainer thisIngredient : ingredients) {
             if (!ingredientSet.contains(thisIngredient)) {

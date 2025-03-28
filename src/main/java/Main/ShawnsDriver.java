@@ -1,5 +1,6 @@
 package Main;
 
+import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 import Interfaces.IngredientSetInterface;
 import LegacyFiles.IIDGenerator;
@@ -23,7 +24,7 @@ public class ShawnsDriver {
         IIDContainer testSpinach = new IIDContainer("Spinach", "Just a vegetable", new IIDTag[]{IngredientType.VEGGIE, CookState.ROASTED, CutState.WHOLE, IngredientUnit.GRAM});
         IIDContainer testChicken = new IIDContainer("Chicken", "Some other chicken noise", new IIDTag[]{IngredientType.PROTEIN, IngredientType.MISC, CookState.ROASTED, CutState.GROUND,IngredientUnit.GRAM});
 
-        IIDContainer[] iidContainers = {beef, duck, testChicken};
+        IIDContainer[] iidContainers = {beef, duck, chicken};
 
         IIDContainer[] iidContainersToBeRemoved = {beef, duck};
 
@@ -35,6 +36,12 @@ public class ShawnsDriver {
         IngredientSet setOne = new IngredientSet(iidContainers);
         IngredientSet setTwo = new IngredientSet(iidContainersToBeRemoved);
         IngredientSet setThree = new IngredientSet(iidContainersToBeRemovedTest);
+
+        setOne.remove(beef, chicken, testSpinach);
+
+        for (IIDContainerInterface ingredient : setOne.getIngredientSet()) {
+            System.out.println(ingredient);
+        }
 
 //        ArrayList<IIDContainer> differenceSet = setOne.compare(setThree);
 //
