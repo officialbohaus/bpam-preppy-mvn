@@ -144,7 +144,7 @@ public class   IIDContainer implements IIDContainerInterface {
     public boolean isValidIID() { return validIID; }
 
     // Setters ========================================================
-    @Override
+
     public void addTag(IIDTag tag) {
         guardSet();
         Iterator<IIDTag> tagsIter = tags.iterator();
@@ -191,7 +191,7 @@ public class   IIDContainer implements IIDContainerInterface {
         this.nicknameTag = nicknameTag;
     }
 
-    @Override
+
     public void addTags(List<IIDTag> tags) {
         guardSet();
         for (IIDTag tag : tags) {

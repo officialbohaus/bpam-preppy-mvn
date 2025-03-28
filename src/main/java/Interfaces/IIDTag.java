@@ -1,7 +1,13 @@
 package Interfaces;
 
+/**
+ * The interface implemented by any class that can be added to an <code>IIDContainer</code>
+ */
 public interface IIDTag {
 
+    /**
+     * @return the legacy IID format
+     */
     public String getTagString();
     // returns String representation of enum
 

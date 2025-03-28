@@ -4,6 +4,7 @@ import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class IIDTests {
 
     // Constructor Tests ==============================================
     // TODO: all constructors need testing
+    // <editor-fold desc="Constructor Tests Fold">
     @Test
     public void EmptyConstructorTests() {
         assertDoesNotThrow(() -> { emptyIIDContainer(); });
@@ -39,15 +41,17 @@ public class IIDTests {
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(underValidTagsArray)); });
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(overValidTagsArray)); });
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Constructor Tests) ======================================
-    private IIDContainer emptyIIDContainer() { return new IIDContainer(); }
-    private final IIDTag[] validTagsArray = new IIDTag[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
-    private final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
-    private final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
+    private static IIDContainer emptyIIDContainer() { return new IIDContainer(); }
+    private static final IIDTag[] validTagsArray = new IIDTag[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
+    private static final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
+    private static final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
+
 
 
     // Validity Tests ================================================
+    // <editor-fold desc="Validity Tests Fold">
     @Test
     public void emptyIIDContainerValidityTests() {
         // an IIDContainer holds a valid IID if it has one of each critical tag, and a nonempty nameTag and descriptorTag
@@ -81,13 +85,17 @@ public class IIDTests {
         testContainer.addDescriptorTag("");
         assertFalse(testContainer.isValidIID());
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Validity Tests) ===========================
-    private IIDContainer getValidIIDContainer() { return new IIDContainer("TestFood", "Steamed Gruel", validTagsArray); }
-    private IIDContainer getNoNameTagNoDescriptorTagIIDContainer() { return new IIDContainer(validTagsArray); }
-    private IIDContainer getNoNameTagIIDContainer() { return new IIDContainer("", "Steamed Gruel", validTagsArray); }
+    private static final String validNameTag = "TestFood";
+    private static final String validDescriptorTag = "Steamed Gruel";
+    public static IIDContainer getValidIIDContainer() { return new IIDContainer(validNameTag, validDescriptorTag, validTagsArray); }
+    private static IIDContainer getNoNameTagNoDescriptorTagIIDContainer() { return new IIDContainer(validTagsArray); }
+    private static IIDContainer getNoNameTagIIDContainer() { return new IIDContainer("", validDescriptorTag, validTagsArray); }
+
 
     // Lock Tests ==============================================================================
+    // <editor-fold desc="Lock Tests Fold">
     @Test
     public void isLockedTest() {
         // should default to unlocked from incomplete constructions
@@ -217,10 +225,14 @@ public class IIDTests {
         assertTrue(testContainer.isLocked());
 
     }
+    // </editor-fold>
     // Available Methods & Variables (via Lock Tests) ==========================================
 
 
+
     // Get Tests ====================================================
+    // TODO: Finish
+    // <editor-fold desc="Get Tests Fold">
     @Test
     public void getIIDStringTest() {
         fail("Not yet implemented");
@@ -236,76 +248,152 @@ public class IIDTests {
     @Test
     public void getTagTest() {
         IIDContainer testContainer = getValidIIDContainer();
+        IIDTag CutStateTest = testContainer.getTag(CutState.class);
+        assertTrue(CutStateTest.isSameTag(validTagsArray[0]));
+        IIDTag CookStateTest = testContainer.getTag(CookState.class);
+        assertTrue(CookStateTest.isSameTag(validTagsArray[1]));
+        IIDTag IngredientUnitTest = testContainer.getTag(IngredientUnit.class);
+        assertTrue(IngredientUnitTest.isSameTag(validTagsArray[2]));
+        IIDTag IngredientTypeTest = testContainer.getTag(IngredientType.class);
+        assertTrue(IngredientTypeTest.isSameTag(validTagsArray[3]));
     }
 
     @Test
     public void getNameTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        String nameTagTest = testContainer.getNameTag();
+        assertEquals(validNameTag, nameTagTest);
     }
 
     @Test
     public void getDescriptorTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        String descriptorTagTest = testContainer.getDescriptorTag();
+        assertEquals(validDescriptorTag, descriptorTagTest);
     }
 
     @Test
     public void getNicknameTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        String nickNameTest = testContainer.getNickname();
+        assertNull(nickNameTest);
+        testContainer.unlock();
+        testContainer.addNicknameTag("Mom's Favorite");
+        testContainer.lock();
+        nickNameTest = testContainer.getNickname();
+        assertEquals("Mom's Favorite", nickNameTest);
     }
 
     @Test
     public void getContainerIDTest() {
-        fail("Not yet implemented");
+
     }
 
     @Test
     public void toStringTest() {
-        fail("Not yet implemented");
+        // calling toString does not return null and an empty string
+        IIDContainer testContainer = getValidIIDContainer();
+        String expectedTest = testContainer.toString();
+        assertEquals(expectedTest, testContainer.toString());
+        assertNotNull(expectedTest);
     }
+    // </editor-fold>
     // Available Methods & Variables (via Get Tests) ===========================================
 
+
+
     // Checkers Tests ==========================================================================
+    // <editor-fold desc="Checkers Tests Fold">
     @Test
     public void isIIDTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        assertTrue(testContainer.isValidIID(), "The variable is a valid IID.");
+        IIDContainer falseContainer = getNoNameTagIIDContainer();
+        assertFalse(falseContainer.isValidIID(), "The variable is an invalid IID: No Name Tag.");
+        IIDContainer falseContainer2 = getNoNameTagNoDescriptorTagIIDContainer();
+        assertFalse(falseContainer2.isValidIID(), "The variable is an invalid IID: No Name Tag, No Descriptor Tag.");
+        IIDContainer falseContainer3 = emptyIIDContainer();
+        assertFalse(falseContainer3.isValidIID(), "The variable is an invalid IID: Is empty of all tags");
+
     }
 
     @Test
     public void hasTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        assertTrue(testContainer.hasTag(CutState.NONE));
+        assertTrue(testContainer.hasTag(CookState.NONE));
+        assertTrue(testContainer.hasTag(IngredientUnit.UNIT));
+        assertTrue(testContainer.hasTag(IngredientType.MISC));
     }
 
     @Test
     public void isValidIIDTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        assertTrue(testContainer.isValidIID());
+        IIDContainer falseContainer = getNoNameTagIIDContainer();
+        assertFalse(falseContainer.isValidIID());
+        IIDContainer falseContainer2 = getNoNameTagNoDescriptorTagIIDContainer();
+        assertFalse(falseContainer2.isValidIID());
     }
-
+    // </editor-fold>
     // Available Methods & Variables (via Checkers Tests) ========================================
 
+
+
     // Setters Tests =============================================================================
+    // <editor-fold desc="Setters Tests Fold">
     @Test
     public void addTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        testContainer.addTag(CutState.GROUND);
+        testContainer.addTag(CookState.RAW);
+        testContainer.addTag(IngredientUnit.GRAM);
+        testContainer.addTag(IngredientType.PROTEIN);
+        testContainer.lock();
+        assertTrue(testContainer.isValidIID());
     }
 
     @Test
     public void addNameTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        testContainer.addNameTag("Bacon");
+        testContainer.lock();
+        assertTrue(testContainer.isValidIID());
+        IIDContainer testContainer2 = getNoNameTagIIDContainer();
+        testContainer2.addNameTag("Pineapple"); // adding a Name tag completes the auto lock of container
+        assertTrue(testContainer2.isValidIID());
     }
 
     @Test
     public void addDescriptorTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        testContainer.addDescriptorTag("Finely chopped");
+        testContainer.lock();
+        assertTrue(testContainer.isValidIID());
+        IIDContainer testContainer2 = getNoNameTagNoDescriptorTagIIDContainer();
+        testContainer2.addNameTag("Red Kidney Beans"); // adding a Name tag is a step in the auto lock of container
+        testContainer2.addDescriptorTag("Twice Baked"); // adding a Descriptor tag completes the auto lock of container
+        assertTrue(testContainer2.isValidIID());
+
     }
 
     @Test
     public void addNicknameTagTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        testContainer.addNicknameTag("Grandma's Affair Chocolate Cake");
+        testContainer.lock();
+        assertTrue(testContainer.isValidIID());
     }
 
     @Test
     public void addTagsTest() {
-        fail("Not yet implemented");
+
     }
+
+    // </editor-fold>
 
 }

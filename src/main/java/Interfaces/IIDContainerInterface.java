@@ -23,8 +23,8 @@ public interface IIDContainerInterface {
 
     public String getNickname();
 
-    public void addTag(IIDTag tag);
+//    public void addTag(IIDTag tag);
 
-    public void addTags(List<IIDTag> tags);
+//    public void addTags(List<IIDTag> tags);
 
 }
