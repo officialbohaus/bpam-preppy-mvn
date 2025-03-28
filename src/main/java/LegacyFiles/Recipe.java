@@ -37,7 +37,7 @@ public class Recipe implements RecipeInterface {
         this.description = description;
         this.filterTags = Arrays.copyOf(filterTags, filterTags.length);
         this.ingredients = new ArrayList<>();
-        this.ingredients.addAll(ingredients.getIngredients());
+//        this.ingredients.addAll(ingredients.getIngredients());
         SERVING_SIZE = servingSize;
 
         ingredientQuantity = new ArrayList<>();

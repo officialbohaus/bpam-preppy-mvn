@@ -1,16 +1,31 @@
 package Interfaces;
 
+import Main.IIDContainer;
+
 import java.util.ArrayList;
 
 public interface IngredientSetInterface {
-    public ArrayList<String> getIngredients();
+    public ArrayList<IIDContainer> getIngredients(int...indices);
 
-    public void remove(String IID);
+    public ArrayList<IIDContainer> getIngredientSet();
 
     public String getDescription();
 
-    public ArrayList<String> compare(IngredientSetInterface otherSet);
+    public String getName();
 
-    public boolean contains(String IID);
+    public int getSize();
 
+    public IIDContainer getIngredient(int index);
+
+    public void remove(IIDContainer iidContainer);
+
+    public void remove(IIDContainer[] iidContainers);
+
+    public ArrayList<IIDContainer> compare(IngredientSetInterface otherSet);
+
+    public ArrayList<IIDContainer> getDifferenceSet();
+
+    public boolean isEqual(IngredientSetInterface otherSet);
+
+    public boolean contains(IIDContainer iidContainer);
 }
