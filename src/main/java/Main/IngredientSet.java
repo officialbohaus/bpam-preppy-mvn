@@ -2,6 +2,7 @@ package Main;
 
 import Exceptions.IncompatibleArraysException;
 import Exceptions.InvalidRequestException;
+import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 import Interfaces.IngredientSetInterface;
 import LegacyFiles.IIDParser;
@@ -14,7 +15,7 @@ import java.util.List;
 public class IngredientSet implements IngredientSetInterface {
 
     private String name, description;
-    private ArrayList<IIDContainer> ingredientSet, differenceSet;
+    private ArrayList<IIDContainerInterface> ingredientSet, differenceSet;
     private ArrayList<String> differenceString;
     private ArrayList<Integer> modCounts;
     private Iterator<IIDContainer> iterator;
@@ -50,8 +51,8 @@ public class IngredientSet implements IngredientSetInterface {
         modCounts.add(0);
     }
 
-    public ArrayList<IIDContainer> getIngredientSet() {
-        return new ArrayList<>(ingredientSet);
+    public ArrayList<IIDContainerInterface> getIngredientSet() {
+        return new ArrayList<IIDContainerInterface>(ingredientSet);
     }
 
     public int getIngredientIndex(IIDContainer ingredient) {
@@ -59,74 +60,27 @@ public class IngredientSet implements IngredientSetInterface {
         return ingredientSet.indexOf(ingredient);
     }
 
-    // PASS IN IIDCONTAINER INSTEAD OF INDEX AND/OR INGREDIENTNAME
-    public void addNameTag(int index, String newNameTag) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).unlock();
-        ingredientSet.get(index).addNameTag(newNameTag);
-        incrementModCount(index);
-        ingredientSet.get(index).lock();
-    }
-
-    public void addDescriptorTag(int index, String newDescriptorTag) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).unlock();
-        ingredientSet.get(index).addDescriptorTag(newDescriptorTag);
-        incrementModCount(index);
-        ingredientSet.get(index).lock();
-    }
-
-    public void addNicknameTag(int index, String newNicknameTag) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).unlock();
-        ingredientSet.get(index).addNicknameTag(newNicknameTag);
-        incrementModCount(index);
-        ingredientSet.get(index).lock();
-    }
-
-    public void addTag(int index, IIDTag newTag) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).unlock();
-        ingredientSet.get(index).addTag(newTag);
-        incrementModCount(index);
-        ingredientSet.get(index).lock();
-    }
-
-    public void addTags(int index, IIDTag[] newTags) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).unlock();
-        ingredientSet.get(index).addTags(Arrays.asList(newTags));
-        incrementModCount(index);
-        ingredientSet.get(index).lock();
-    }
-
-    public void addTags(int index, List<IIDTag> newTags) {
-        if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
-        ingredientSet.get(index).addTags(newTags);
-        incrementModCount(index);
-    }
-
     @Override
-    public IIDContainer getIngredient(int index) {
+    public IIDContainerInterface getIngredient(int index) {
         if (index < 0 || index >= ingredientSet.size()) { throw new IndexOutOfBoundsException(); }
         return ingredientSet.get(index);
     }
 
     @Override
-    public ArrayList<IIDContainer> getIngredients(int...indices) {
+    public ArrayList<IIDContainerInterface> getIngredients(int...indices) {
         for (int index : indices) {
             if (index < 0 || index >= ingredientSet.size()) {
                 throw new IndexOutOfBoundsException();
             }
         }
 
-        ArrayList<IIDContainer> ingredients = new ArrayList<>();
+        ArrayList<IIDContainerInterface> ingredients = new ArrayList<>();
 
         for (int index : indices) {
             ingredients.add(ingredientSet.get(index));
         }
 
-        return new ArrayList<>(ingredients);
+        return new ArrayList<IIDContainerInterface>(ingredients);
     }
 
     @Override
@@ -151,10 +105,10 @@ public class IngredientSet implements IngredientSetInterface {
             }
         }
 
-        Iterator<IIDContainer> iterator = ingredientSet.iterator();
+        Iterator<IIDContainerInterface> iterator = ingredientSet.iterator();
 
         while (iterator.hasNext()) {
-            IIDContainer iteratorContainer = iterator.next();
+            IIDContainerInterface iteratorContainer = iterator.next();
             for (IIDContainer thisIngredient : ingredients) {
                 if (iteratorContainer.equals(thisIngredient)) {
                     iterator.remove();
@@ -174,10 +128,10 @@ public class IngredientSet implements IngredientSetInterface {
     }
 
     @Override
-    public ArrayList<IIDContainer> compare(IngredientSetInterface otherSet) {
+    public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet) {
         differenceSet = new ArrayList<>();
 
-        for (IIDContainer thisIngredient : otherSet.getIngredientSet()) {
+        for (IIDContainerInterface thisIngredient : otherSet.getIngredientSet()) {
             if (!ingredientSet.contains(thisIngredient)) {
                 differenceSet.add(thisIngredient);
             }
@@ -186,8 +140,8 @@ public class IngredientSet implements IngredientSetInterface {
         return new ArrayList<>(differenceSet);
     }
 
-    public ArrayList<IIDContainer> getDifferenceSet() {
-        return new ArrayList<>(differenceSet);
+    public ArrayList<IIDContainerInterface> getDifferenceSet() {
+        return new ArrayList<IIDContainerInterface>(differenceSet);
     }
 
     public boolean isEqual(IngredientSetInterface otherSet) {
@@ -195,7 +149,7 @@ public class IngredientSet implements IngredientSetInterface {
             return false;
         }
 
-        for (IIDContainer thisContainer : otherSet.getIngredientSet()) {
+        for (IIDContainerInterface thisContainer : otherSet.getIngredientSet()) {
             if (!ingredientSet.contains(thisContainer)) {
                 return false;
             }

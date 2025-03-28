@@ -5,9 +5,9 @@ import Main.IIDContainer;
 import java.util.ArrayList;
 
 public interface IngredientSetInterface {
-    public ArrayList<IIDContainer> getIngredients(int...indices);
+    public ArrayList<IIDContainerInterface> getIngredients(int...indices);
 
-    public ArrayList<IIDContainer> getIngredientSet();
+    public ArrayList<IIDContainerInterface> getIngredientSet();
 
     public String getDescription();
 
@@ -15,15 +15,15 @@ public interface IngredientSetInterface {
 
     public int getSize();
 
-    public IIDContainer getIngredient(int index);
+    public IIDContainerInterface getIngredient(int index);
 
     public void remove(IIDContainer iidContainer);
 
     public void remove(IIDContainer[] iidContainers);
 
-    public ArrayList<IIDContainer> compare(IngredientSetInterface otherSet);
+    public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet);
 
-    public ArrayList<IIDContainer> getDifferenceSet();
+    public ArrayList<IIDContainerInterface> getDifferenceSet();
 
     public boolean isEqual(IngredientSetInterface otherSet);
 
