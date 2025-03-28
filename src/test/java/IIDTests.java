@@ -391,7 +391,7 @@ public class IIDTests {
 
     @Test
     public void addTagsTest() {
-
+        fail("Not yet implemented");
     }
 
     // </editor-fold>
