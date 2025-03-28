@@ -17,7 +17,7 @@ public class IngredientSet implements IngredientSetInterface {
     private String name, description;
     private ArrayList<IIDContainerInterface> ingredientSet, differenceSet;
     private ArrayList<String> differenceString;
-    private ArrayList<Integer> modCounts;
+    private final ArrayList<Integer> modCounts;
     private Iterator<IIDContainer> iterator;
 
     // Test Constructors
@@ -41,14 +41,22 @@ public class IngredientSet implements IngredientSetInterface {
         this.description = description;
         ingredientSet = new ArrayList<>(iidContainerArrayList);
         modCounts = new ArrayList<>();
+
         for (int index = 0; index < iidContainerArrayList.size(); index++) {
-            modCounts.add(0);
+            modCounts.add(index, iidContainerArrayList.get(index).getModCount());
         }
     }
 
     public void addIngredient(IIDContainer ingredient) {
         ingredientSet.add(ingredient);
-        modCounts.add(0);
+        modCounts.add(ingredient.getModCount());
+    }
+
+    public void addIngredients(IIDContainer... ingredients) {
+        for (IIDContainer ingredient : ingredients) {
+            ingredientSet.add(ingredient);
+            modCounts.add(ingredient.getModCount());
+        }
     }
 
     public ArrayList<IIDContainerInterface> getIngredientSet() {

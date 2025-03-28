@@ -9,6 +9,10 @@ public interface IngredientSetInterface {
 
     public ArrayList<IIDContainerInterface> getIngredientSet();
 
+    public void addIngredient(IIDContainer ingredient);
+
+    public void addIngredients(IIDContainer... ingredients);
+
     public String getDescription();
 
     public String getName();

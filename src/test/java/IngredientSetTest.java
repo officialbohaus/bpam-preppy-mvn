@@ -46,6 +46,7 @@ class IngredientSetTest {
     private IIDContainer rockyMountainOysters = new IIDContainer("Rocky Mountain Oysters", "Bull Balls", new IIDTag[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM});
     private IIDContainer[] containersArray = {beef, duck, chicken};
     private ArrayList<IIDContainer> containersArrayList = new ArrayList<>(Arrays.asList(containersArray));
+    private IIDContainer[] containersArrayOf4 = {beef, duck, chicken, rockyMountainOysters};
 
     // TODO Test modCounts in the constructor tests?
     @Test
@@ -56,15 +57,6 @@ class IngredientSetTest {
             assertNull(ingredientSet.getName());
             assertNull(ingredientSet.getDescription());
             assertEquals(0, ingredientSet.getSize());
-        });
-
-        ingredientSet.addIngredient(beef);
-
-        assertAll(() -> {
-            assertNull(ingredientSet.getName());
-            assertNull(ingredientSet.getDescription());
-            assertEquals(1, ingredientSet.getSize());
-            assertEquals(beef, ingredientSet.getIngredient(0));
         });
     }
 
@@ -78,15 +70,6 @@ class IngredientSetTest {
                     assertEquals(3, ingredientSet.getSize());
                     assertEquals(chicken, ingredientSet.getIngredient(2));
         });
-
-        ingredientSet.addIngredient(rockyMountainOysters);
-
-        assertAll(() -> {
-            assertNull(ingredientSet.getName());
-            assertNull(ingredientSet.getDescription());
-            assertEquals(4, ingredientSet.getSize());
-            assertEquals(rockyMountainOysters, ingredientSet.getIngredient(3));
-        });
     }
 
     @Test
@@ -98,15 +81,6 @@ class IngredientSetTest {
             assertNull(ingredientSet.getDescription());
             assertEquals(3, ingredientSet.getSize());
             assertEquals(beef, ingredientSet.getIngredient(0));
-        });
-
-        ingredientSet.addIngredient(rockyMountainOysters);
-
-        assertAll(() -> {
-            assertNull(ingredientSet.getName());
-            assertNull(ingredientSet.getDescription());
-            assertEquals(4, ingredientSet.getSize());
-            assertEquals(rockyMountainOysters, ingredientSet.getIngredient(3));
         });
     }
 
@@ -120,13 +94,6 @@ class IngredientSetTest {
             assertEquals(3, ingredientSet.getSize());
             assertEquals(beef, ingredientSet.getIngredient(0));
         });
-
-        ingredientSet.addIngredient(rockyMountainOysters);
-
-        assertAll(() -> {
-            assertEquals(4, ingredientSet.getSize());
-            assertEquals(rockyMountainOysters, ingredientSet.getIngredient(3));
-        });
     }
 
     @Test
@@ -139,13 +106,18 @@ class IngredientSetTest {
             assertEquals(3, ingredientSet.getSize());
             assertEquals(beef, ingredientSet.getIngredient(0));
         });
+    }
 
-        ingredientSet.addIngredient(rockyMountainOysters);
+    @Test
+    void getIngredientSetTest() {
+        ingredientSet = new IngredientSet();
+        assertEquals(new ArrayList<IIDContainer>(), ingredientSet.getIngredientSet());
 
-        assertAll(() -> {
-            assertEquals(4, ingredientSet.getSize());
-            assertEquals(rockyMountainOysters, ingredientSet.getIngredient(3));
-        });
+        ingredientSet = new IngredientSet(containersArray);
+        assertEquals(containersArrayList, ingredientSet.getIngredientSet());
+
+        ingredientSet = new IngredientSet(new IIDContainer[] {beef, duck});
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck})), ingredientSet.getIngredientSet());
     }
 
     @Test
@@ -153,25 +125,12 @@ class IngredientSetTest {
         ingredientSet = new IngredientSet();
 
         ingredientSet.addIngredient(chicken);
-
-        assertEquals(chicken, ingredientSet.getIngredient(0));
-        assertEquals(1, ingredientSet.getSize());
-
-
-    }
-
-    @Test
-    void getIngredientSetTest() {
-        ingredientSet = new IngredientSet();
-
-        assertEquals(new ArrayList<IIDContainer>(), ingredientSet.getIngredientSet());
-        assertEquals(0, ingredientSet.getSize());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), ingredientSet.getIngredientSet());
 
         ingredientSet = new IngredientSet(containersArray);
-        assertEquals(containersArrayList, ingredientSet.getIngredientSet());
 
-        ingredientSet.remove(beef);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[]{duck, chicken})), ingredientSet.getIngredientSet());
+        ingredientSet.addIngredient(rockyMountainOysters);
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters})), ingredientSet.getIngredientSet());
     }
 
     @Test
@@ -182,7 +141,14 @@ class IngredientSetTest {
             ingredientSet.getIngredientIndex(rockyMountainOysters);
             ingredientSet.getIngredientIndex(new IIDContainer("Pork", "Oink Oink", new IIDTag[] { CookState.STEAMED, CutState.SLICED }));
         });
+
+        assertDoesNotThrow(() -> {
+            ingredientSet.getIngredientIndex(beef);
+            ingredientSet.getIngredientIndex(duck);
+            ingredientSet.getIngredientIndex(chicken);
+        });
     }
+
     @Test
     void getIngredientIndexTest() {
         ingredientSet = new IngredientSet(containersArrayList);
@@ -201,28 +167,110 @@ class IngredientSetTest {
         });
     }
 
-
     @Test
     void getIngredientGuardTest() {
+        ingredientSet = new IngredientSet(containersArray);
 
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            ingredientSet.getIngredient(-1);
+            ingredientSet.getIngredient(3);
+            ingredientSet.getIngredient(4);
+        });
+
+        assertDoesNotThrow(() -> {
+           ingredientSet.getIngredient(0);
+           ingredientSet.getIngredient(1);
+            ingredientSet.getIngredient(2);
+        });
     }
 
     @Test
     void getIngredientTest() {
+        ingredientSet = new IngredientSet(containersArray);
+
+        assertEquals(containersArray[0], ingredientSet.getIngredient(0));
+        assertEquals(containersArray[1], ingredientSet.getIngredient(1));
+        assertEquals(containersArray[2], ingredientSet.getIngredient(2));
+
+        IIDContainer[] newContainerArray = {beef, duck, chicken, rockyMountainOysters};
+        ingredientSet = new IngredientSet(newContainerArray);
+
+        assertEquals(newContainerArray[0], ingredientSet.getIngredient(0));
+        assertEquals(newContainerArray[1], ingredientSet.getIngredient(1));
+        assertEquals(newContainerArray[2], ingredientSet.getIngredient(2));
+        assertEquals(newContainerArray[3], ingredientSet.getIngredient(3));
     }
 
     @Test
     void getIngredientsGuardTest() {
+        ingredientSet = new IngredientSet(containersArray);
 
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            ingredientSet.getIngredients(-1, 0, 1 , 2);
+            ingredientSet.getIngredients(0, 1, 2, 3);
+            ingredientSet.getIngredients(0, 1, 2, 3, 4);
+            ingredientSet.getIngredients(-1, 0, 1, 2, 3, 4);
+        });
+
+        assertDoesNotThrow(() -> {
+           ingredientSet.getIngredients(0);
+           ingredientSet.getIngredients(0, 1);
+           ingredientSet.getIngredients(0, 1, 2);
+        });
     }
 
     @Test
     void getIngredientsTest() {
+        ingredientSet = new IngredientSet(containersArray);
 
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef})), ingredientSet.getIngredients(0));
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, chicken})), ingredientSet.getIngredients(0, 2));
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken})), ingredientSet.getIngredients(0, 1, 2));
+
+        ingredientSet.addIngredient(rockyMountainOysters);
+
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), ingredientSet.getIngredients(3));
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, rockyMountainOysters})), ingredientSet.getIngredients(0, 3));
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters})), ingredientSet.getIngredients(0, 1, 2, 3));
+    }
+
+    @Test
+    void removeOneIngredientGuardTest() {
+        ingredientSet = new IngredientSet(containersArray);
+
+        assertThrows(InvalidRequestException.class, () -> {
+           ingredientSet.remove(rockyMountainOysters);
+           ingredientSet.remove(new IIDContainer("Spinach", "Some green veggie", new IIDTag[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.DICED, IngredientUnit.GRAM}));
+        });
+
+        assertDoesNotThrow(() -> {
+            ingredientSet.remove(beef);
+            ingredientSet.remove(duck);
+            ingredientSet.remove(chicken);
+        });
     }
 
     @Test
     void removeOneIngredientTest() {
+        ingredientSet = new IngredientSet(containersArray);
+
+        ingredientSet.remove(duck);
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, chicken})), ingredientSet.getIngredientSet());
+        assertEquals(0, ingredientSet.getIngredientIndex(beef));
+        assertEquals(1, ingredientSet.getIngredientIndex(chicken));
+
+        ingredientSet.remove(beef);
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), ingredientSet.getIngredientSet());
+        assertEquals(0, ingredientSet.getIngredientIndex(chicken));
+
+        ingredientSet.addIngredient(rockyMountainOysters);
+        ingredientSet.remove(chicken);
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), ingredientSet.getIngredientSet());
+        assertEquals(0, ingredientSet.getIngredientIndex(rockyMountainOysters));
+    }
+
+    @Test
+    void removeMultipleIngredientsGuardTest() {
 
     }
 
