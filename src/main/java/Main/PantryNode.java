@@ -115,5 +115,11 @@ public class PantryNode implements IIDContainerInterface {
         checkMod();
         return iidContainer.getNickname();
     }
+
+    @Override
+    public int getModCount() {
+        checkMod();
+        return iidContainer.getModCount();
+    }
     // </editor-fold
 }

@@ -3,19 +3,20 @@ package Interfaces;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * enforces getter commands to read an IID within some object that holds a single IID
+ */
 public interface IIDContainerInterface {
 
+    // not yet implemented
     public String getIIDString();
 
-    public boolean isIID(IIDContainerInterface iidContainer);
-
+    // gets the a list of all tags
     public ArrayList<IIDTag> getTags();
 
-    public boolean hasTag(IIDTag tag);
-
+    // gets the tag of the class extending IIDTag provided
     public <T extends IIDTag> IIDTag getTag(Class<T> tag);
-
-    // eventually will "lock down", not able to change IIDs in container. For now, we can
 
     public String getNameTag();
 
@@ -23,10 +24,13 @@ public interface IIDContainerInterface {
 
     public String getNickname();
 
+    // gets current count of modifications, for checking if any modifications have happened at a later state.
     public int getModCount();
 
-//    public void addTag(IIDTag tag);
+    // checks IID for provided tag
+    public boolean hasTag(IIDTag tag);
 
-//    public void addTags(List<IIDTag> tags);
+    // checks if IID matches the one provided
+    public boolean isIID(IIDContainerInterface iidContainer);
 
 }
