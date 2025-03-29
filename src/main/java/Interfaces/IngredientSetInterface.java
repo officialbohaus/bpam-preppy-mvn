@@ -21,9 +21,15 @@ public interface IngredientSetInterface {
 
     public IIDContainerInterface getIngredient(int index);
 
-    public void remove(IIDContainer iidContainer);
+//    public void add(IIDContainerInterface iidContainer);
 
+<<<<<<< Updated upstream
     public void remove(IIDContainer... iidContainers);
+=======
+    public void remove(IIDContainerInterface iidContainer);
+
+    public void remove(IIDContainerInterface[] iidContainers);
+>>>>>>> Stashed changes
 
     public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet);
 
@@ -31,7 +37,8 @@ public interface IngredientSetInterface {
 
     public boolean isEqual(IngredientSetInterface otherSet);
 
-    public boolean contains(IIDContainer iidContainer);
+    public boolean contains(IIDContainerInterface iidContainer);
+
 }
 
 /*

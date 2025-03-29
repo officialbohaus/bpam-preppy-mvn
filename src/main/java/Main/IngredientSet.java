@@ -92,14 +92,20 @@ public class IngredientSet implements IngredientSetInterface {
     }
 
     @Override
-    public void remove(IIDContainer ingredient) {
+    public void remove(IIDContainerInterface ingredient) {
         if (!ingredientSet.contains(ingredient)) { throw new InvalidRequestException(ingredient + "is not in the ingredient set."); }
         ingredientSet.remove(ingredient);
     }
 
+<<<<<<< Updated upstream
     public void remove(IIDContainer... ingredients) {
         ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
         for (IIDContainer thisIngredient : ingredients) {
+=======
+    public void remove(IIDContainerInterface[] ingredients) {
+        ArrayList<IIDContainerInterface> invalidContainers = new ArrayList<>();
+        for (IIDContainerInterface thisIngredient : ingredients) {
+>>>>>>> Stashed changes
             if (!ingredientSet.contains(thisIngredient)) {
                 invalidContainers.add(thisIngredient);
             }
