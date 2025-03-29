@@ -1,14 +1,14 @@
 package Main;
 
-import Interfaces.IngredientSetInterface;
+import Interfaces.IIDSetInterface;
 
 public class Recipe {
 
-        private final IngredientSetInterface recipeIngredients;
+        private final IIDSetInterface recipeIngredients;
         private final String name;
         private final String description;
 
-        public Recipe(IngredientSet recipeIngredients, String name, String description) {
+        public Recipe(IIDSet recipeIngredients, String name, String description) {
             this.name = name;
             this.description = description;
             this.recipeIngredients = recipeIngredients;

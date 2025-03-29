@@ -2,7 +2,7 @@ package LegacyFiles;
 
 import Exceptions.InvalidIIDException;
 import Exceptions.InvalidQuantityException;
-import Interfaces.IngredientSetInterface;
+import Interfaces.IIDSetInterface;
 import Interfaces.RecipeInterface;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class Recipe implements RecipeInterface {
     // TODO: Implement description and name
 
     //
-    public Recipe(String name, String description, IngredientSetInterface ingredients, String[] filterTags, int servingSize) {
+    public Recipe(String name, String description, IIDSetInterface ingredients, String[] filterTags, int servingSize) {
         this.name = name;
         this.description = description;
         this.filterTags = Arrays.copyOf(filterTags, filterTags.length);

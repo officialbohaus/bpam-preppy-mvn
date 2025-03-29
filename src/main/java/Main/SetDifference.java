@@ -2,7 +2,7 @@ package Main;
 
 
 import Interfaces.IIDContainerInterface;
-import Interfaces.IngredientSetInterface;
+import Interfaces.IIDSetInterface;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +20,7 @@ import java.util.Iterator;
 public class SetDifference {
 
     // { A B C D } + { C d e F } = { C }
-    public static IngredientSet getFullMatchList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+    public static IIDSet getFullMatchList(IIDSetInterface primarySet, IIDSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> fullMatchList = new ArrayList<>();
         for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
             if (contrastSet.contains(primaryIID)) {
@@ -29,11 +29,11 @@ public class SetDifference {
         }
         String setName = "fullMatchList " + primarySet.getName() + "/" + contrastSet.getName();
         String setDesc = "fullMatchList for primarySet \"" + primarySet.getName()  + "\" against contrastSet \"" + contrastSet.getName()  + "\"";
-        return new IngredientSet(setName, setDesc, fullMatchList);
+        return new IIDSet(setName, setDesc, fullMatchList);
     }
 
     // { A B C D } + { C d e F } = { d }
-    private static IngredientSet getPartialMatchList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+    private static IIDSet getPartialMatchList(IIDSetInterface primarySet, IIDSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> partialMatchList = new ArrayList<>();
         for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
             if (!contrastSet.contains(primaryIID)) {
@@ -46,11 +46,11 @@ public class SetDifference {
         }
         String setName = "partialMatchList " + primarySet.getName() + "/" + contrastSet.getName();
         String setDesc = "partialMatchList for primarySet \"" + primarySet.getName()  + "\" against contrastSet \"" + contrastSet.getName()  + "\"";
-        return new IngredientSet(setName, setDesc, partialMatchList);
+        return new IIDSet(setName, setDesc, partialMatchList);
     }
 
     // { A B C D } + { C d e F } = { e F }
-    private static IngredientSet getNoMatchInContrastList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+    private static IIDSet getNoMatchInContrastList(IIDSetInterface primarySet, IIDSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> noMatchInContrastList = new ArrayList<>();
         for (IIDContainerInterface contrastIID : contrastSet.getIngredientSet()) {
             Iterator<IIDContainerInterface> iterator = primarySet.getIngredientSet().iterator();
@@ -68,15 +68,15 @@ public class SetDifference {
 
         String setName = "noMatchInContrastList " + primarySet.getName() + "/" + contrastSet.getName();
         String setDesc = "noMatchInContrastList for primarySet \"" + primarySet.getName()  + "\" against contrastSet \"" + contrastSet.getName()  + "\"";
-        return new IngredientSet(setName, setDesc, noMatchInContrastList);
+        return new IIDSet(setName, setDesc, noMatchInContrastList);
     }
 
     // { A B C D } + { C d e F } = { A B }
-    private static IngredientSet getNoMatchInPrimaryList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
-        IngredientSet reversedDiff = SetDifference.getNoMatchInContrastList(contrastSet, primarySet); // can just call counterpart method, and reverse the inputs
+    private static IIDSet getNoMatchInPrimaryList(IIDSetInterface primarySet, IIDSetInterface contrastSet) {
+        IIDSet reversedDiff = SetDifference.getNoMatchInContrastList(contrastSet, primarySet); // can just call counterpart method, and reverse the inputs
         String setName = "noMatchInPrimaryList " + primarySet.getName() + "/" + contrastSet.getName();
         String setDesc = "noMatchInPrimaryList for primarySet \"" + primarySet.getName()  + "\" against contrastSet \"" + contrastSet.getName()  + "\"";
-        return new IngredientSet(setName, setDesc, reversedDiff.getIngredients());
+        return new IIDSet(setName, setDesc, reversedDiff.getIngredients());
     }
         //        ArrayList<IIDContainerInterface> noMatchInPrimaryList = new ArrayList<>();
 //        for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
