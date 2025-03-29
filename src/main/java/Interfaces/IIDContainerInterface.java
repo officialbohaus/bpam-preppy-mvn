@@ -23,6 +23,8 @@ public interface IIDContainerInterface {
 
     public String getNickname();
 
+    public int getModCount();
+
 //    public void addTag(IIDTag tag);
 
 //    public void addTags(List<IIDTag> tags);

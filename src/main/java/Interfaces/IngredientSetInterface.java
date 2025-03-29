@@ -9,9 +9,9 @@ public interface IngredientSetInterface {
 
     public ArrayList<IIDContainerInterface> getIngredientSet();
 
-    public void addIngredient(IIDContainer ingredient);
+    public void addIngredient(IIDContainerInterface ingredient);
 
-    public void addIngredients(IIDContainer... ingredients);
+    public void addIngredients(IIDContainerInterface... ingredients);
 
     public String getDescription();
 
@@ -23,13 +23,12 @@ public interface IngredientSetInterface {
 
 //    public void add(IIDContainerInterface iidContainer);
 
-<<<<<<< Updated upstream
-    public void remove(IIDContainer... iidContainers);
-=======
+
+
     public void remove(IIDContainerInterface iidContainer);
 
     public void remove(IIDContainerInterface[] iidContainers);
->>>>>>> Stashed changes
+
 
     public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet);
 

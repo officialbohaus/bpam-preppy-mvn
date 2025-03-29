@@ -19,7 +19,7 @@ import java.util.Iterator;
  */
 public class SetDifference {
 
-
+    // { A B C D } + { C d e F } = { C }
     public static IngredientSet getFullMatchList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> fullMatchList = new ArrayList<>();
         for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
@@ -32,7 +32,8 @@ public class SetDifference {
         return new IngredientSet(setName, setDesc, fullMatchList);
     }
 
-    private static ArrayList<IIDContainerInterface> getPartialMatchList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+    // { A B C D } + { C d e F } = { d }
+    private static IngredientSet getPartialMatchList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> partialMatchList = new ArrayList<>();
         for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
             if (!contrastSet.contains(primaryIID)) {
@@ -48,7 +49,8 @@ public class SetDifference {
         return new IngredientSet(setName, setDesc, partialMatchList);
     }
 
-    private static ArrayList<IIDContainerInterface> getNoMatchInContrastList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+    // { A B C D } + { C d e F } = { e F }
+    private static IngredientSet getNoMatchInContrastList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
         ArrayList<IIDContainerInterface> noMatchInContrastList = new ArrayList<>();
         for (IIDContainerInterface contrastIID : contrastSet.getIngredientSet()) {
             Iterator<IIDContainerInterface> iterator = primarySet.getIngredientSet().iterator();
@@ -69,27 +71,25 @@ public class SetDifference {
         return new IngredientSet(setName, setDesc, noMatchInContrastList);
     }
 
-    private static ArrayList<IIDContainerInterface> getNoMatchInPrimaryList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
-        ArrayList<IngredientSetInterface> noMatchInPrimaryList = new ArrayList<>();
-        for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
-            Iterator<IIDContainerInterface> iterator = contrastSet.getIngredientSet().iterator();
-            boolean foundAnyMatch = false;
-            while (iterator.hasNext() && !foundAnyMatch) {
-                IIDContainerInterface nextIID = iterator.next();
-                if (nextIID.isIID(primaryIID) || nextIID.getNameTag().equals(primaryIID.getNameTag())) {
-                    foundAnyMatch = true;
-                }
-            }
-            if (!foundAnyMatch) {
-                noMatchInPrimaryList.add(primarySet);
-            }
-        }
-
+    // { A B C D } + { C d e F } = { A B }
+    private static IngredientSet getNoMatchInPrimaryList(IngredientSetInterface primarySet, IngredientSetInterface contrastSet) {
+        IngredientSet reversedDiff = SetDifference.getNoMatchInContrastList(contrastSet, primarySet); // can just call counterpart method, and reverse the inputs
         String setName = "noMatchInPrimaryList " + primarySet.getName() + "/" + contrastSet.getName();
         String setDesc = "noMatchInPrimaryList for primarySet \"" + primarySet.getName()  + "\" against contrastSet \"" + contrastSet.getName()  + "\"";
-        return new IngredientSet(setName, setDesc, noMatchInPrimaryList);
+        return new IngredientSet(setName, setDesc, reversedDiff.getIngredients());
     }
-
-    public SetDifference() {}
-
+        //        ArrayList<IIDContainerInterface> noMatchInPrimaryList = new ArrayList<>();
+//        for (IIDContainerInterface primaryIID : primarySet.getIngredientSet()) {
+//            Iterator<IIDContainerInterface> iterator = contrastSet.getIngredientSet().iterator();
+//            boolean foundAnyMatch = false;
+//            while (iterator.hasNext() && !foundAnyMatch) {
+//                IIDContainerInterface nextIID = iterator.next();
+//                if (nextIID.isIID(primaryIID) || nextIID.getNameTag().equals(primaryIID.getNameTag())) {
+//                    foundAnyMatch = true;
+//                }
+//            }
+//            if (!foundAnyMatch) {
+//                noMatchInPrimaryList.add(primarySet);
+//            }
 }
+

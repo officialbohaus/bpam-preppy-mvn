@@ -24,11 +24,11 @@ public class IngredientSet implements IngredientSetInterface {
     public IngredientSet() {
         this(new ArrayList<>());
     }
-    public IngredientSet(IIDContainer... iidContainers) {
+    public IngredientSet(IIDContainerInterface... iidContainers) {
         this(null, null, new ArrayList<>(Arrays.asList(iidContainers)));
     }
 
-    public IngredientSet(ArrayList<IIDContainer> iidContainerArrayList) {
+    public IngredientSet(ArrayList<IIDContainerInterface> iidContainerArrayList) {
         this(null, null, iidContainerArrayList);
     }
 
@@ -36,7 +36,7 @@ public class IngredientSet implements IngredientSetInterface {
         this(name, description, new ArrayList<>(Arrays.asList(iidContainerArray)));
     }
 
-    public IngredientSet(String name, String description, ArrayList<IIDContainer> iidContainerArrayList) {
+    public IngredientSet(String name, String description, ArrayList<IIDContainerInterface> iidContainerArrayList) {
         this.name = name;
         this.description = description;
         ingredientSet = new ArrayList<>(iidContainerArrayList);
@@ -47,13 +47,13 @@ public class IngredientSet implements IngredientSetInterface {
         }
     }
 
-    public void addIngredient(IIDContainer ingredient) {
+    public void addIngredient(IIDContainerInterface ingredient) {
         ingredientSet.add(ingredient);
         modCounts.add(ingredient.getModCount());
     }
 
-    public void addIngredients(IIDContainer... ingredients) {
-        for (IIDContainer ingredient : ingredients) {
+    public void addIngredients(IIDContainerInterface... ingredients) {
+        for (IIDContainerInterface ingredient : ingredients) {
             ingredientSet.add(ingredient);
             modCounts.add(ingredient.getModCount());
         }
@@ -63,7 +63,7 @@ public class IngredientSet implements IngredientSetInterface {
         return new ArrayList<IIDContainerInterface>(ingredientSet);
     }
 
-    public int getIngredientIndex(IIDContainer ingredient) {
+    public int getIngredientIndex(IIDContainerInterface ingredient) {
         if (!ingredientSet.contains(ingredient)) { throw new InvalidRequestException(); }
         return ingredientSet.indexOf(ingredient);
     }
@@ -97,15 +97,15 @@ public class IngredientSet implements IngredientSetInterface {
         ingredientSet.remove(ingredient);
     }
 
-<<<<<<< Updated upstream
-    public void remove(IIDContainer... ingredients) {
-        ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
-        for (IIDContainer thisIngredient : ingredients) {
-=======
+
+//    public void remove(IIDContainer... ingredients) {
+//        ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
+//        for (IIDContainer thisIngredient : ingredients) {
+
     public void remove(IIDContainerInterface[] ingredients) {
         ArrayList<IIDContainerInterface> invalidContainers = new ArrayList<>();
         for (IIDContainerInterface thisIngredient : ingredients) {
->>>>>>> Stashed changes
+
             if (!ingredientSet.contains(thisIngredient)) {
                 invalidContainers.add(thisIngredient);
             }
@@ -123,7 +123,7 @@ public class IngredientSet implements IngredientSetInterface {
 
         while (iterator.hasNext()) {
             IIDContainerInterface iteratorContainer = iterator.next();
-            for (IIDContainer thisIngredient : ingredients) {
+            for (IIDContainerInterface thisIngredient : ingredients) {
                 if (iteratorContainer.equals(thisIngredient)) {
                     iterator.remove();
                 }
@@ -172,7 +172,7 @@ public class IngredientSet implements IngredientSetInterface {
         return true;
     }
 
-    public boolean contains(IIDContainer ingredient) {
+    public boolean contains(IIDContainerInterface ingredient) {
         return ingredientSet.contains(ingredient);
     }
 
