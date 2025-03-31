@@ -1,18 +1,14 @@
 package Main;
 
-import Exceptions.IncompatibleArraysException;
 import Exceptions.InvalidRequestException;
 import Interfaces.IIDContainerInterface;
-import Interfaces.IIDTag;
-import Interfaces.IngredientSetInterface;
-import LegacyFiles.IIDParser;
+import Interfaces.IIDSetInterface;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
-public class IngredientSet implements IngredientSetInterface {
+public class IIDSet implements IIDSetInterface {
 
     private String name, description;
     private ArrayList<IIDContainerInterface> ingredientSet, differenceSet;
@@ -21,22 +17,22 @@ public class IngredientSet implements IngredientSetInterface {
     private Iterator<IIDContainer> iterator;
 
     // Test Constructors
-    public IngredientSet() {
+    public IIDSet() {
         this(new ArrayList<>());
     }
-    public IngredientSet(IIDContainer... iidContainers) {
+    public IIDSet(IIDContainerInterface... iidContainers) {
         this(null, null, new ArrayList<>(Arrays.asList(iidContainers)));
     }
 
-    public IngredientSet(ArrayList<IIDContainer> iidContainerArrayList) {
+    public IIDSet(ArrayList<IIDContainerInterface> iidContainerArrayList) {
         this(null, null, iidContainerArrayList);
     }
 
-    public IngredientSet(String name, String description, IIDContainer... iidContainerArray) {
+    public IIDSet(String name, String description, IIDContainer... iidContainerArray) {
         this(name, description, new ArrayList<>(Arrays.asList(iidContainerArray)));
     }
 
-    public IngredientSet(String name, String description, ArrayList<IIDContainer> iidContainerArrayList) {
+    public IIDSet(String name, String description, ArrayList<IIDContainerInterface> iidContainerArrayList) {
         this.name = name;
         this.description = description;
         ingredientSet = new ArrayList<>(iidContainerArrayList);
@@ -47,23 +43,23 @@ public class IngredientSet implements IngredientSetInterface {
         }
     }
 
-    public void addIngredient(IIDContainer ingredient) {
+    public void addIngredient(IIDContainerInterface ingredient) {
         ingredientSet.add(ingredient);
         modCounts.add(ingredient.getModCount());
     }
 
-    public void addIngredients(IIDContainer... ingredients) {
-        for (IIDContainer ingredient : ingredients) {
+    public void addIngredients(IIDContainerInterface... ingredients) {
+        for (IIDContainerInterface ingredient : ingredients) {
             ingredientSet.add(ingredient);
             modCounts.add(ingredient.getModCount());
         }
     }
 
-    public ArrayList<IIDContainerInterface> getIngredientSet() {
+    public ArrayList<IIDContainerInterface> getIIDSet() {
         return new ArrayList<IIDContainerInterface>(ingredientSet);
     }
 
-    public int getIngredientIndex(IIDContainer ingredient) {
+    public int getIngredientIndex(IIDContainerInterface ingredient) {
         if (!ingredientSet.contains(ingredient)) { throw new InvalidRequestException(); }
         return ingredientSet.indexOf(ingredient);
     }
@@ -92,14 +88,25 @@ public class IngredientSet implements IngredientSetInterface {
     }
 
     @Override
-    public void remove(IIDContainer ingredient) {
+    public ArrayList<IIDContainerInterface> getIngredientSet() {
+        return new ArrayList<IIDContainerInterface>(ingredientSet);
+    }
+
+    @Override
+    public void remove(IIDContainerInterface ingredient) {
         if (!ingredientSet.contains(ingredient)) { throw new InvalidRequestException(ingredient + "is not in the ingredient set."); }
         ingredientSet.remove(ingredient);
     }
 
-    public void remove(IIDContainer... ingredients) {
-        ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
-        for (IIDContainer thisIngredient : ingredients) {
+
+//    public void remove(IIDContainer... ingredients) {
+//        ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
+//        for (IIDContainer thisIngredient : ingredients) {
+
+    public void remove(IIDContainerInterface[] ingredients) {
+        ArrayList<IIDContainerInterface> invalidContainers = new ArrayList<>();
+        for (IIDContainerInterface thisIngredient : ingredients) {
+
             if (!ingredientSet.contains(thisIngredient)) {
                 invalidContainers.add(thisIngredient);
             }
@@ -117,7 +124,7 @@ public class IngredientSet implements IngredientSetInterface {
 
         while (iterator.hasNext()) {
             IIDContainerInterface iteratorContainer = iterator.next();
-            for (IIDContainer thisIngredient : ingredients) {
+            for (IIDContainerInterface thisIngredient : ingredients) {
                 if (iteratorContainer.equals(thisIngredient)) {
                     iterator.remove();
                 }
@@ -136,7 +143,7 @@ public class IngredientSet implements IngredientSetInterface {
     }
 
     @Override
-    public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet) {
+    public ArrayList<IIDContainerInterface> compare(IIDSetInterface otherSet) {
         differenceSet = new ArrayList<>();
 
         for (IIDContainerInterface thisIngredient : otherSet.getIngredientSet()) {
@@ -152,7 +159,7 @@ public class IngredientSet implements IngredientSetInterface {
         return new ArrayList<IIDContainerInterface>(differenceSet);
     }
 
-    public boolean isEqual(IngredientSetInterface otherSet) {
+    public boolean isEqual(IIDSetInterface otherSet) {
         if (otherSet.getIngredientSet().size() != ingredientSet.size()) {
             return false;
         }
@@ -166,7 +173,7 @@ public class IngredientSet implements IngredientSetInterface {
         return true;
     }
 
-    public boolean contains(IIDContainer ingredient) {
+    public boolean contains(IIDContainerInterface ingredient) {
         return ingredientSet.contains(ingredient);
     }
 

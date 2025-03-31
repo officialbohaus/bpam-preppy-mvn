@@ -1,17 +1,19 @@
 package Interfaces;
 
-import Main.IIDContainer;
-
 import java.util.ArrayList;
 
-public interface IngredientSetInterface {
+
+/**
+ * the interface for <code>IngredientSet</code>
+ */
+public interface IIDSetInterface {
     public ArrayList<IIDContainerInterface> getIngredients(int...indices);
 
     public ArrayList<IIDContainerInterface> getIngredientSet();
 
-    public void addIngredient(IIDContainer ingredient);
+    public void addIngredient(IIDContainerInterface ingredient);
 
-    public void addIngredients(IIDContainer... ingredients);
+    public void addIngredients(IIDContainerInterface... ingredients);
 
     public String getDescription();
 
@@ -21,17 +23,23 @@ public interface IngredientSetInterface {
 
     public IIDContainerInterface getIngredient(int index);
 
-    public void remove(IIDContainer iidContainer);
+//    public void add(IIDContainerInterface iidContainer);
 
-    public void remove(IIDContainer... iidContainers);
 
-    public ArrayList<IIDContainerInterface> compare(IngredientSetInterface otherSet);
+
+    public void remove(IIDContainerInterface iidContainer);
+
+    public void remove(IIDContainerInterface[] iidContainers);
+
+
+    public ArrayList<IIDContainerInterface> compare(IIDSetInterface otherSet);
 
     public ArrayList<IIDContainerInterface> getDifferenceSet();
 
-    public boolean isEqual(IngredientSetInterface otherSet);
+    public boolean isEqual(IIDSetInterface otherSet);
 
-    public boolean contains(IIDContainer iidContainer);
+    public boolean contains(IIDContainerInterface iidContainer);
+
 }
 
 /*

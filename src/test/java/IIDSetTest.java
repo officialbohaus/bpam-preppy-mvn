@@ -1,6 +1,5 @@
 import Exceptions.InvalidRequestException;
 import Interfaces.IIDTag;
-import Interfaces.IIDSetInterface;
 import Main.IIDContainer;
 import Main.IIDSet;
 import Tags.CookState;
@@ -8,7 +7,6 @@ import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +17,8 @@ class IIDSetTest {
 
     /* Create tests for the following methods:
      * - void addIngredient(IIDContainer ingredient)
-     * - ArrayList<IIDContainer> getIIDSet()()
-     * - int getIIDSet()Index(IIDContainer ingredient)
+     * - ArrayList<IIDContainer> getIngredientSet()
+     * - int getIngredientSetIndex(IIDContainer ingredient)
      * - void addNameTag(int index, String newNameTag)
      * - void addDescriptorTag(int index, String newDescriptorTag)
      * - void addNicknameTag(int index, String newNicknameTag)
@@ -33,9 +31,9 @@ class IIDSetTest {
      * - void remove(IIDContainer[] ingredients)
      * - String getName()
      * - String getDescription()
-     * - ArrayList<IIDContainer> compare(IIDSet()Interface otherSet)
+     * - ArrayList<IIDContainer> compare(IngredientSetInterface otherSet)
      * - ArrayList<IIDContainer> getDifferenceSet()
-     * - boolean isEqual(IIDSet()Interface otherSet)
+     * - boolean isEqual(IngredientSetInterface otherSet)
      * - boolean contains(IIDContainer ingredient)
      * - int getSize()
      *  */
@@ -53,7 +51,7 @@ class IIDSetTest {
 
     // TODO Test modCounts in the constructor tests?
     @Test
-    void iidSetWithNoParametersTest() {
+    void ingredientSetWithNoParametersTest() {
         iidSet = new IIDSet();
 
         assertAll(() -> {
@@ -64,7 +62,7 @@ class IIDSetTest {
     }
 
     @Test
-    void iidSetWithAnArray() {
+    void ingredientSetWithAnArray() {
         iidSet = new IIDSet(containersArray);
 
         assertAll(() -> {
@@ -76,7 +74,7 @@ class IIDSetTest {
     }
 
     @Test
-    void iidSetWithAnArrayList() {
+    void ingredientSetWithAnArrayList() {
         iidSet = new IIDSet(containersArrayList);
 
         assertAll(() -> {
@@ -88,8 +86,8 @@ class IIDSetTest {
     }
 
     @Test
-    void iidSetWithNameDescriptionAndArray() {
-        iidSet = new Main.IIDSet("Set One", "So so eepy", containersArray);
+    void ingredientSetWithNameDescriptionAndArray() {
+        iidSet = new IIDSet("Set One", "So so eepy", containersArray);
 
         assertAll (() -> {
             assertEquals("Set One", iidSet.getName());
@@ -100,8 +98,8 @@ class IIDSetTest {
     }
 
     @Test
-    void iidSetWithNameDescriptionAndArrayList() {
-        iidSet = new Main.IIDSet("Set One", "So so eepy", containersArrayList);
+    void ingredientSetWithNameDescriptionAndArrayList() {
+        iidSet = new IIDSet("Set One", "So so eepy", containersArrayList);
 
         assertAll (() -> {
             assertEquals("Set One", iidSet.getName());
@@ -112,43 +110,43 @@ class IIDSetTest {
     }
 
     @Test
-    void getIIDSet()Test() {
-        iidSet = new Main.IIDSet();
-        assertEquals(new ArrayList<IIDContainer>(), iidSet.getIIDSet());
+    void getIngredientSetTest() {
+        iidSet = new IIDSet();
+        assertEquals(new ArrayList<IIDContainer>(), iidSet.getIngredientSet());
 
-        iidSet = new Main.IIDSet(containersArray);
-        assertEquals(containersArrayList, iidSet.getIIDSet());
+        iidSet = new IIDSet(containersArray);
+        assertEquals(containersArrayList, iidSet.getIngredientSet());
 
-        iidSet = new Main.IIDSet(new IIDContainer[] {beef, duck});
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck})), iidSet.getIIDSet());
+        iidSet = new IIDSet(new IIDContainer[] {beef, duck});
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck})), iidSet.getIngredientSet());
     }
 
     @Test
     void addIngredientTest() {
-        iidSet = new Main.IIDSet();
+        iidSet = new IIDSet();
 
         iidSet.addIngredient(chicken);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), iidSet.getIngredientSet());
 
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         iidSet.addIngredient(rockyMountainOysters);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters})), iidSet.getIngredientSet());
     }
 
     @Test
     void addIngredientsTest() {
-        iidSet = new Main.IIDSet();
+        iidSet = new IIDSet();
 
         iidSet.addIngredients(beef);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef})), iidSet.getIngredientSet());
 
         iidSet.addIngredients(duck, chicken);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken})), iidSet.getIngredientSet());
 
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
         iidSet.addIngredients(rockyMountainOysters, spinach);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters, spinach})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, duck, chicken, rockyMountainOysters, spinach})), iidSet.getIngredientSet());
     }
 
     @Test
@@ -169,7 +167,7 @@ class IIDSetTest {
 
     @Test
     void getIngredientIndexTest() {
-        iidSet = new Main.IIDSet(containersArrayList);
+        iidSet = new IIDSet(containersArrayList);
 
         assertAll(() -> {
             assertEquals(0, iidSet.getIngredientIndex(beef));
@@ -187,7 +185,7 @@ class IIDSetTest {
 
     @Test
     void getIngredientGuardTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             iidSet.getIngredient(-1);
@@ -204,14 +202,14 @@ class IIDSetTest {
 
     @Test
     void getIngredientTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertEquals(containersArray[0], iidSet.getIngredient(0));
         assertEquals(containersArray[1], iidSet.getIngredient(1));
         assertEquals(containersArray[2], iidSet.getIngredient(2));
 
         IIDContainer[] newContainerArray = {beef, duck, chicken, rockyMountainOysters};
-        iidSet = new Main.IIDSet(newContainerArray);
+        iidSet = new IIDSet(newContainerArray);
 
         assertEquals(newContainerArray[0], iidSet.getIngredient(0));
         assertEquals(newContainerArray[1], iidSet.getIngredient(1));
@@ -221,7 +219,7 @@ class IIDSetTest {
 
     @Test
     void getIngredientsGuardTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             iidSet.getIngredients(-1, 0, 1 , 2);
@@ -239,7 +237,7 @@ class IIDSetTest {
 
     @Test
     void getIngredientsTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef})), iidSet.getIngredients(0));
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, chicken})), iidSet.getIngredients(0, 2));
@@ -254,7 +252,7 @@ class IIDSetTest {
 
     @Test
     void removeOneIngredientGuardTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertThrows(InvalidRequestException.class, () -> {
            iidSet.remove(rockyMountainOysters);
@@ -270,26 +268,26 @@ class IIDSetTest {
 
     @Test
     void removeOneIngredientTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         iidSet.remove(duck);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, chicken})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {beef, chicken})), iidSet.getIngredientSet());
         assertEquals(0, iidSet.getIngredientIndex(beef));
         assertEquals(1, iidSet.getIngredientIndex(chicken));
 
         iidSet.remove(beef);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {chicken})), iidSet.getIngredientSet());
         assertEquals(0, iidSet.getIngredientIndex(chicken));
 
         iidSet.addIngredient(rockyMountainOysters);
         iidSet.remove(chicken);
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), iidSet.getIngredientSet());
         assertEquals(0, iidSet.getIngredientIndex(rockyMountainOysters));
     }
 
     @Test
     void removeMultipleIngredientsGuardTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         assertThrows(InvalidRequestException.class, () -> {
            iidSet.remove(rockyMountainOysters);
@@ -310,84 +308,84 @@ class IIDSetTest {
 
     @Test
     void removeMultipleIngredientsTest() {
-        iidSet = new Main.IIDSet(containersArray);
+        iidSet = new IIDSet(containersArray);
 
         iidSet.remove(beef, chicken);
         assertEquals(0, iidSet.getIngredientIndex(duck));
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {duck})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {duck})), iidSet.getIngredientSet());
 
         iidSet.addIngredients(rockyMountainOysters, spinach);
         iidSet.remove(duck, spinach);
         assertEquals(0, iidSet.getIngredientIndex(rockyMountainOysters));
-        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), iidSet.getIIDSet());
+        assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), iidSet.getIngredientSet());
     }
 
     @Test
     void getNameTest() {
-        iidSet = new Main.IIDSet("Set One", "Generic Description", containersArray);
+        iidSet = new IIDSet("Set One", "Generic Description", containersArray);
         assertEquals("Set One", iidSet.getName());
 
-        iidSet = new Main.IIDSet("", "", containersArray);
+        iidSet = new IIDSet("", "", containersArray);
         assertEquals("", iidSet.getName());
     }
 
     @Test
     void getDescriptionTest() {
-        iidSet = new Main.IIDSet("Set One", "Generic Description", containersArray);
+        iidSet = new IIDSet("Set One", "Generic Description", containersArray);
         assertEquals("Generic Description", iidSet.getDescription());
 
-        iidSet = new Main.IIDSet("", "", containersArray);
+        iidSet = new IIDSet("", "", containersArray);
         assertEquals("", iidSet.getDescription());
     }
 
     @Test
     void compareTest() {
-        Main.IIDSet() setOne = new Main.IIDSet(containersArray);
-        Main.IIDSet() setTwo = new Main.IIDSet(containersArrayList);
+        IIDSet setOne = new IIDSet(containersArray);
+        IIDSet setTwo = new IIDSet(containersArrayList);
 
         assertEquals(new ArrayList<IIDContainer>(), setOne.compare(setTwo));
 
-        setTwo = new Main.IIDSet(containersArrayOf4);
+        setTwo = new IIDSet(containersArrayOf4);
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), setOne.compare(setTwo));
 
-        setTwo = new Main.IIDSet(containersArrayOf5);
+        setTwo = new IIDSet(containersArrayOf5);
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters, spinach})), setOne.compare(setTwo));
     }
 
     @Test
     void getDifferenceSetTest() {
-        Main.IIDSet() setOne = new Main.IIDSet(containersArray);
-        Main.IIDSet() setTwo = new Main.IIDSet(containersArrayList);
+        IIDSet setOne = new IIDSet(containersArray);
+        IIDSet setTwo = new IIDSet(containersArrayList);
 
         setOne.compare(setTwo);
         assertEquals(new ArrayList<IIDContainer>(), setOne.getDifferenceSet());
 
-        setTwo = new Main.IIDSet(containersArrayOf4);
+        setTwo = new IIDSet(containersArrayOf4);
         setOne.compare(setTwo);
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters})), setOne.getDifferenceSet());
 
-        setTwo = new Main.IIDSet(containersArrayOf5);
+        setTwo = new IIDSet(containersArrayOf5);
         setOne.compare(setTwo);
         assertEquals(new ArrayList<IIDContainer>(Arrays.asList(new IIDContainer[] {rockyMountainOysters, spinach})), setOne.getDifferenceSet());
     }
 
     @Test
     void isEqualTest() {
-        Main.IIDSet() setOne = new Main.IIDSet(containersArray);
-        Main.IIDSet() setTwo = new Main.IIDSet(containersArrayList);
+        IIDSet setOne = new IIDSet(containersArray);
+        IIDSet setTwo = new IIDSet(containersArrayList);
 
         assertTrue(setOne.isEqual(setTwo));
 
-        setTwo = new Main.IIDSet(containersArrayOf4);
+        setTwo = new IIDSet(containersArrayOf4);
         assertFalse(setOne.isEqual(setTwo));
 
-        setTwo = new Main.IIDSet(containersArrayOf5);
+        setTwo = new IIDSet(containersArrayOf5);
         assertFalse(setOne.isEqual(setTwo));
 
-        setTwo = new Main.IIDSet(chicken, beef, duck);
+        setTwo = new IIDSet(chicken, beef, duck);
         assertTrue(setOne.isEqual(setTwo));
 
-        setTwo = new Main.IIDSet();
+        setTwo = new IIDSet();
         assertFalse(setOne.isEqual(setTwo));
     }
 

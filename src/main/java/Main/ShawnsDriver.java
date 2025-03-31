@@ -2,9 +2,6 @@ package Main;
 
 import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
-import Interfaces.IngredientSetInterface;
-import LegacyFiles.IIDGenerator;
-import LegacyFiles.Step;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
@@ -12,8 +9,6 @@ import Tags.IngredientUnit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Optional;
 
 public class ShawnsDriver {
     public static void main(String[] args) {
@@ -33,9 +28,9 @@ public class ShawnsDriver {
         ArrayList<IIDContainer> ingredientSet = new ArrayList<>(Arrays.asList(iidContainers));
         ArrayList<IIDContainer> otherSet = new ArrayList<>(Arrays.asList(iidContainersToBeRemoved));
 
-        IngredientSet setOne = new IngredientSet(iidContainers);
-        IngredientSet setTwo = new IngredientSet(iidContainersToBeRemoved);
-        IngredientSet setThree = new IngredientSet(iidContainersToBeRemovedTest);
+        IIDSet setOne = new IIDSet(iidContainers);
+        IIDSet setTwo = new IIDSet(iidContainersToBeRemoved);
+        IIDSet setThree = new IIDSet(iidContainersToBeRemovedTest);
 
         setOne.remove(beef, chicken, testSpinach);
 
