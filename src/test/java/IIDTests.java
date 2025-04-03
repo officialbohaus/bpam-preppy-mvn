@@ -352,11 +352,14 @@ public class IIDTests {
         IIDContainer testContainer = getValidIIDContainer();
         testContainer.unlock();
         testContainer.addTag(CutState.GROUND);
+        assertTrue(testContainer.hasTag(CutState.GROUND));
         testContainer.addTag(CookState.RAW);
+        assertTrue(testContainer.hasTag(CookState.RAW));
         testContainer.addTag(IngredientUnit.GRAM);
+        assertTrue(testContainer.hasTag(IngredientUnit.GRAM));
         testContainer.addTag(IngredientType.PROTEIN);
+        assertTrue(testContainer.hasTag(IngredientType.PROTEIN));
         testContainer.lock();
-        assertTrue(testContainer.isValidIID());
     }
 
     @Test
@@ -396,7 +399,14 @@ public class IIDTests {
 
     @Test
     public void addTagsTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        IIDTag[] testList = {CutState.WHOLE, CookState.RAW};
+        ArrayList<IIDTag> testList2 = new ArrayList(Arrays.asList(testList));
+        testContainer.addTags(testList2);
+        testContainer.lock();
+        assertTrue(testContainer.hasTag(CutState.WHOLE));
+        assertTrue(testContainer.hasTag(CookState.RAW));
     }
 
     // </editor-fold>
