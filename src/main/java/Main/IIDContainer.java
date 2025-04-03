@@ -7,12 +7,13 @@ import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class   IIDContainer implements IIDContainerInterface {
+public class   IIDContainer implements IIDContainerInterface, Serializable {
     /*
     The IIDContainer Class represents an object that holds all the components to an IID.
 

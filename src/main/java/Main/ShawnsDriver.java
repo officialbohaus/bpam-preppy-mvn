@@ -32,7 +32,7 @@ public class ShawnsDriver {
         IIDSet setTwo = new IIDSet(iidContainersToBeRemoved);
         IIDSet setThree = new IIDSet(iidContainersToBeRemovedTest);
 
-        setOne.remove(beef, chicken, testSpinach);
+//        setOne.remove(beef, chicken, testSpinach);
 
         for (IIDContainerInterface ingredient : setOne.getIngredientSet()) {
             System.out.println(ingredient);
