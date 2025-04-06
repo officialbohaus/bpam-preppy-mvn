@@ -1,4 +1,5 @@
 import Exceptions.InvalidRequestException;
+import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 import Main.IIDContainer;
 import Main.IIDSet;
@@ -45,7 +46,7 @@ class IIDSetTest {
     private IIDContainer rockyMountainOysters = new IIDContainer("Rocky Mountain Oysters", "Bull Balls", new IIDTag[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM});
     private IIDContainer spinach = new IIDContainer("Spinach", "Some green veggie", new IIDTag[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.JULIENNED, IngredientUnit.GRAM});
     private IIDContainer[] containersArray = {beef, duck, chicken};
-    private ArrayList<IIDContainer> containersArrayList = new ArrayList<>(Arrays.asList(containersArray));
+    private ArrayList<IIDContainerInterface> containersArrayList = new ArrayList<>(Arrays.asList(containersArray));
     private IIDContainer[] containersArrayOf4 = {beef, duck, chicken, rockyMountainOysters};
     private IIDContainer[] containersArrayOf5 = {beef, duck, chicken, rockyMountainOysters, spinach};
 

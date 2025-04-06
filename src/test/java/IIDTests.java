@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class IIDTests {
 
+
+
     // Constructor Tests ==============================================
     // TODO: all constructors need testing
     // <editor-fold desc="Constructor Tests Fold">
@@ -48,7 +50,10 @@ public class IIDTests {
     private static final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
     private static final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
 
-
+    public static final IIDContainer IID_TEST_CONTAINER_1 = new IIDContainer("TestFood1", "Test Food 1", validTagsArray);
+    public static final IIDContainer IID_TEST_CONTAINER_2 = new IIDContainer("TestFood2", "Test Food 2", validTagsArray);
+    public static final IIDContainer IID_TEST_CONTAINER_3 = new IIDContainer("TestFood3", "Test Food 3", validTagsArray);
+    public static final IIDContainer IID_TEST_CONTAINER_4 = new IIDContainer("TestFood4", "Test Food 4", validTagsArray);
 
     // Validity Tests ================================================
     // <editor-fold desc="Validity Tests Fold">
@@ -347,11 +352,14 @@ public class IIDTests {
         IIDContainer testContainer = getValidIIDContainer();
         testContainer.unlock();
         testContainer.addTag(CutState.GROUND);
+        assertTrue(testContainer.hasTag(CutState.GROUND));
         testContainer.addTag(CookState.RAW);
+        assertTrue(testContainer.hasTag(CookState.RAW));
         testContainer.addTag(IngredientUnit.GRAM);
+        assertTrue(testContainer.hasTag(IngredientUnit.GRAM));
         testContainer.addTag(IngredientType.PROTEIN);
+        assertTrue(testContainer.hasTag(IngredientType.PROTEIN));
         testContainer.lock();
-        assertTrue(testContainer.isValidIID());
     }
 
     @Test
@@ -391,7 +399,14 @@ public class IIDTests {
 
     @Test
     public void addTagsTest() {
-        fail("Not yet implemented");
+        IIDContainer testContainer = getValidIIDContainer();
+        testContainer.unlock();
+        IIDTag[] testList = {CutState.WHOLE, CookState.RAW};
+        ArrayList<IIDTag> testList2 = new ArrayList(Arrays.asList(testList));
+        testContainer.addTags(testList2);
+        testContainer.lock();
+        assertTrue(testContainer.hasTag(CutState.WHOLE));
+        assertTrue(testContainer.hasTag(CookState.RAW));
     }
 
     // </editor-fold>

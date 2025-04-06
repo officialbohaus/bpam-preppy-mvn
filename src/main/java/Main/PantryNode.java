@@ -3,6 +3,7 @@ package Main;
 import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
@@ -13,7 +14,7 @@ import java.util.ConcurrentModificationException;
  * if the referenced container is modified in any way.
  *
  */
-public class PantryNode implements IIDContainerInterface {
+public class PantryNode implements IIDContainerInterface, Serializable {
 
     private final IIDContainer iidContainer;
     private final int validModCount;
@@ -122,4 +123,9 @@ public class PantryNode implements IIDContainerInterface {
         return iidContainer.getModCount();
     }
     // </editor-fold
+
+    public String toString() {
+        return " x" + quantity + iidContainer;
+    }
+
 }
