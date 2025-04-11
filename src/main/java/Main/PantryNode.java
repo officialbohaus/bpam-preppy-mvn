@@ -1,7 +1,7 @@
 package Main;
 
 import Interfaces.IIDContainerInterface;
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -82,19 +82,19 @@ public class PantryNode implements IIDContainerInterface, Serializable {
     }
 
     @Override
-    public ArrayList<IIDTag> getTags() {
+    public ArrayList<TagDataInterface> getTags() {
         checkMod();
         return iidContainer.getTags();
     }
 
     @Override
-    public boolean hasTag(IIDTag tag) {
+    public boolean hasTag(TagDataInterface tag) {
         checkMod();
         return iidContainer.hasTag(tag);
     }
 
     @Override
-    public <T extends IIDTag> IIDTag getTag(Class<T> tag) {
+    public <T extends TagDataInterface> TagDataInterface getTag(Class<T> tag) {
         checkMod();
         return iidContainer.getTag(tag);
     }

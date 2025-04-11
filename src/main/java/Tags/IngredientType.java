@@ -1,8 +1,8 @@
 package Tags;
 
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 
-public enum IngredientType implements IIDTag {
+public enum IngredientType implements TagDataInterface {
     SPICE("SPICE"),
     GRAIN("GRAIN"),
     FRUIT("FRUIT"),
@@ -41,21 +41,26 @@ public enum IngredientType implements IIDTag {
     }
 
     @Override
-    public boolean isSameTag(IIDTag tag) {
-        if (!(tag instanceof IngredientType)) { return false; }
-        return tag.getTagString().equals(this.getTagString());
+    public Class<? extends TagDataInterface> getTagClass() {
+        return IngredientType.class;
     }
 
-    @Override
-    public <T extends Enum<T>> boolean isSameTagType(Class<T> tagEnum) {
-        return tagEnum == this.getClass();
-    }
-
-    @Override
-    public boolean isSameTagType(IIDTag tag) {
-        Class<? extends IIDTag> tagClass = tag.getClass();
-        return this.getClass().equals(tagClass);
-    }
+//    @Override
+//    public boolean isSameTag(IIDTag tag) {
+//        if (!(tag instanceof IngredientType)) { return false; }
+//        return tag.getTagString().equals(this.getTagString());
+//    }
+//
+////    @Override
+//    public <T extends IIDTag> boolean isSameTagType(Class<T> tagClass) {
+//        return tagClass.equals(IngredientType.class);
+//    }
+//
+//    @Override
+//    public boolean isSameTagType(IIDTag tag) {
+//        Class<? extends IIDTag> tagClass = tag.getClass();
+//        return this.getClass().equals(tagClass);
+//    }
 
 
 }

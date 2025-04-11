@@ -1,6 +1,5 @@
 import Exceptions.InvalidRequestException;
-import Interfaces.IIDTag;
-import Interfaces.IIDSetInterface;
+import Interfaces.TagDataInterface;
 import Main.IIDContainer;
 import Main.IIDSet;
 import Tags.CookState;
@@ -8,7 +7,6 @@ import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,11 +39,11 @@ class IIDSetTest {
      *  */
 
     private IIDSet iidSet;
-    private IIDContainer beef = new IIDContainer("Beef", "I'm the beef.", new IIDTag[]{IngredientType.PROTEIN, CookState.GRILLED, CutState.SLICED, IngredientUnit.GRAM});
-    private IIDContainer duck = new IIDContainer("Duck", "quack!", new IIDTag[]{IngredientType.PROTEIN, CookState.FRIED, CutState.WHOLE, IngredientUnit.MILLILITER});
-    private IIDContainer chicken = new IIDContainer("Chicken", "Some chicken noise", new IIDTag[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
-    private IIDContainer rockyMountainOysters = new IIDContainer("Rocky Mountain Oysters", "Bull Balls", new IIDTag[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM});
-    private IIDContainer spinach = new IIDContainer("Spinach", "Some green veggie", new IIDTag[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.JULIENNED, IngredientUnit.GRAM});
+    private IIDContainer beef = new IIDContainer("Beef", "I'm the beef.", new TagDataInterface[]{IngredientType.PROTEIN, CookState.GRILLED, CutState.SLICED, IngredientUnit.GRAM});
+    private IIDContainer duck = new IIDContainer("Duck", "quack!", new TagDataInterface[]{IngredientType.PROTEIN, CookState.FRIED, CutState.WHOLE, IngredientUnit.MILLILITER});
+    private IIDContainer chicken = new IIDContainer("Chicken", "Some chicken noise", new TagDataInterface[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
+    private IIDContainer rockyMountainOysters = new IIDContainer("Rocky Mountain Oysters", "Bull Balls", new TagDataInterface[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM});
+    private IIDContainer spinach = new IIDContainer("Spinach", "Some green veggie", new TagDataInterface[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.JULIENNED, IngredientUnit.GRAM});
     private IIDContainer[] containersArray = {beef, duck, chicken};
     private ArrayList<IIDContainer> containersArrayList = new ArrayList<>(Arrays.asList(containersArray));
     private IIDContainer[] containersArrayOf4 = {beef, duck, chicken, rockyMountainOysters};
@@ -157,7 +155,7 @@ class IIDSetTest {
 
         assertThrows(InvalidRequestException.class, () -> {
             iidSet.getIngredientIndex(rockyMountainOysters);
-            iidSet.getIngredientIndex(new IIDContainer("Pork", "Oink Oink", new IIDTag[] { CookState.STEAMED, CutState.SLICED }));
+            iidSet.getIngredientIndex(new IIDContainer("Pork", "Oink Oink", new TagDataInterface[] { CookState.STEAMED, CutState.SLICED }));
         });
 
         assertDoesNotThrow(() -> {
@@ -258,7 +256,7 @@ class IIDSetTest {
 
         assertThrows(InvalidRequestException.class, () -> {
            iidSet.remove(rockyMountainOysters);
-           iidSet.remove(new IIDContainer("Spinach", "Some green veggie", new IIDTag[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.DICED, IngredientUnit.GRAM}));
+           iidSet.remove(new IIDContainer("Spinach", "Some green veggie", new TagDataInterface[] {IngredientType.VEGGIE, CookState.STEAMED, CutState.DICED, IngredientUnit.GRAM}));
         });
 
         assertDoesNotThrow(() -> {
@@ -294,7 +292,7 @@ class IIDSetTest {
         assertThrows(InvalidRequestException.class, () -> {
            iidSet.remove(rockyMountainOysters);
            iidSet.remove(spinach);
-           iidSet.remove(new IIDContainer("John Pork", "Yabbadabbadoo", new IIDTag[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM}));
+           iidSet.remove(new IIDContainer("John Pork", "Yabbadabbadoo", new TagDataInterface[] {IngredientType.PROTEIN, CookState.RAW, CutState.WHOLE, IngredientUnit.GRAM}));
         });
 
         assertDoesNotThrow(() -> {
@@ -398,7 +396,7 @@ class IIDSetTest {
         assertTrue(iidSet.contains(beef));
         assertTrue(iidSet.contains(duck));
         assertTrue(iidSet.contains(chicken));
-        IIDContainer otherChicken = new IIDContainer("Chicken", "Some chicken noise", new IIDTag[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
+        IIDContainer otherChicken = new IIDContainer("Chicken", "Some chicken noise", new TagDataInterface[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
         assertFalse(iidSet.contains(otherChicken));
         assertFalse(iidSet.contains(rockyMountainOysters));
         assertFalse(iidSet.contains(spinach));

@@ -1,7 +1,6 @@
 package Interfaces;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -13,10 +12,10 @@ public interface IIDContainerInterface {
     public String getIIDString();
 
     // gets the a list of all tags
-    public ArrayList<IIDTag> getTags();
+    public ArrayList<TagDataInterface> getTags();
 
     // gets the tag of the class extending IIDTag provided
-    public <T extends IIDTag> IIDTag getTag(Class<T> tag);
+    public <T extends TagDataInterface> TagDataInterface getTag(Class<T> tag);
 
     public String getNameTag();
 
@@ -28,7 +27,7 @@ public interface IIDContainerInterface {
     public int getModCount();
 
     // checks IID for provided tag
-    public boolean hasTag(IIDTag tag);
+    public boolean hasTag(TagDataInterface tag);
 
     // checks if IID matches the one provided
     public boolean isIID(IIDContainerInterface iidContainer);

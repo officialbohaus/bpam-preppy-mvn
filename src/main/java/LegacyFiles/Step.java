@@ -2,7 +2,7 @@ package LegacyFiles;
 
 import Exceptions.InvalidIIDException;
 import Exceptions.InvalidRequestException;
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 import Tags.CookState;
 import Tags.CutState;
 
@@ -14,24 +14,24 @@ public class Step extends CookAndCutAndShit {
 
     private String description, name;
     private ArrayList<String> tagsAsString;
-    private IIDTag IIDTagOut;
-    private IIDTag[] tags;
+    private TagDataInterface tagDataInterfaceOut;
+    private TagDataInterface[] tags;
 
     public Step(String description, String name) {
         this(description, name, null);
     }
 
-    public Step(String description, String name, IIDTag IIDTagOut) {
-        this(description, name, null, IIDTagOut);
+    public Step(String description, String name, TagDataInterface tagDataInterfaceOut) {
+        this(description, name, null, tagDataInterfaceOut);
     }
 
-    public Step(String description, String name, IIDTag[] tags, IIDTag IIDTagOut) {
+    public Step(String description, String name, TagDataInterface[] tags, TagDataInterface tagDataInterfaceOut) {
         this.description = description;
         this.name = name;
         this.tags = Arrays.copyOf(tags, tags.length);
-        this.IIDTagOut = IIDTagOut;
+        this.tagDataInterfaceOut = tagDataInterfaceOut;
         tagsAsString = new ArrayList<>();
-        for (IIDTag tag : tags) {
+        for (TagDataInterface tag : tags) {
             tagsAsString.add(tag.toString());
         }
     }
@@ -56,10 +56,10 @@ public class Step extends CookAndCutAndShit {
     public String doThis(String IID) {
         checkTagsIn(tags);
         hasAppropriateTags(IID);
-        if (Arrays.asList(CookState.values()).contains(IIDTagOut)) {
-            return cook(IID, IIDTagOut);
-        } else if (Arrays.asList(CutState.values()).contains(IIDTagOut)) {
-            return cut(IID, IIDTagOut);
+        if (Arrays.asList(CookState.values()).contains(tagDataInterfaceOut)) {
+            return cook(IID, tagDataInterfaceOut);
+        } else if (Arrays.asList(CutState.values()).contains(tagDataInterfaceOut)) {
+            return cut(IID, tagDataInterfaceOut);
         } else {
             throw new InvalidIIDException();
         }
@@ -71,15 +71,15 @@ public class Step extends CookAndCutAndShit {
     // some items need to be cooked twice (e.g. pan-searing a steak and then baking it in an oven)
     private void hasAppropriateTags(String IID) {
         Guards.checkIID(IID);
-        ArrayList<IIDTag> IIDTags = new ArrayList<>();
-        IIDTags.add(IIDParser.getCookStateEnum(IID));
-        IIDTags.add(IIDParser.getCutStateEnum(IID));
-        if (!IIDTags.containsAll(Arrays.asList(tags))) {
+        ArrayList<TagDataInterface> tagDataInterfaces = new ArrayList<>();
+        tagDataInterfaces.add(IIDParser.getCookStateEnum(IID));
+        tagDataInterfaces.add(IIDParser.getCutStateEnum(IID));
+        if (!tagDataInterfaces.containsAll(Arrays.asList(tags))) {
             throw new InvalidRequestException();
         }
 
         // if IIDTagOut is raw and the IID is not raw, throw exception
-        if (IIDParser.getCookStateEnum(IID) != CookState.RAW && IIDTagOut == CookState.RAW) {
+        if (IIDParser.getCookStateEnum(IID) != CookState.RAW && tagDataInterfaceOut == CookState.RAW) {
             throw new InvalidRequestException("WHY ARE YOU TRYING TO TURN A COOKED INGREDIENT BACK TO BEING RAW");
         }
 
@@ -93,8 +93,8 @@ public class Step extends CookAndCutAndShit {
     // Check to see if the IIDTagsIn:
     //  - are actual enums
     //  - is this necessary?
-    private void checkTagsIn(IIDTag[] IIDTagsIn) {
-        for (IIDTag tagIn : IIDTagsIn) {
+    private void checkTagsIn(TagDataInterface[] TagsInInterface) {
+        for (TagDataInterface tagIn : TagsInInterface) {
             if (!Arrays.asList(CookState.values()).contains(tagIn) && !Arrays.asList(CutState.values()).contains(tagIn)) {
                 throw new InvalidRequestException();
             }

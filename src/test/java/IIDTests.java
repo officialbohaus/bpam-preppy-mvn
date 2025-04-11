@@ -1,10 +1,9 @@
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 import Main.IIDContainer;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
 import Tags.IngredientUnit;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -27,8 +26,8 @@ public class IIDTests {
 
     @Test
     public void ArrayConstructorTests() {
-        assertDoesNotThrow(() -> { new IIDContainer(new IIDTag[0]); });
-        assertDoesNotThrow(() -> { new IIDContainer(new IIDTag[10]); });
+        assertDoesNotThrow(() -> { new IIDContainer(new TagDataInterface[0]); });
+        assertDoesNotThrow(() -> { new IIDContainer(new TagDataInterface[10]); });
         assertDoesNotThrow(() -> { new IIDContainer(validTagsArray); });
         // these should likely throw exceptions in future?
         assertDoesNotThrow(() -> { new IIDContainer(underValidTagsArray); });
@@ -37,8 +36,8 @@ public class IIDTests {
 
     @Test
     public void ListConstructorTests() {
-        assertDoesNotThrow(() -> { new IIDContainer(new ArrayList<IIDTag>()); });
-        assertDoesNotThrow(() -> { new IIDContainer(new ArrayList<IIDTag>(10)); });
+        assertDoesNotThrow(() -> { new IIDContainer(new ArrayList<TagDataInterface>()); });
+        assertDoesNotThrow(() -> { new IIDContainer(new ArrayList<TagDataInterface>(10)); });
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(validTagsArray)); });
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(underValidTagsArray)); });
         assertDoesNotThrow(() -> { new IIDContainer(Arrays.asList(overValidTagsArray)); });
@@ -46,9 +45,9 @@ public class IIDTests {
     // </editor-fold>
     // Available Methods & Variables (via Constructor Tests) ======================================
     private static IIDContainer emptyIIDContainer() { return new IIDContainer(); }
-    private static final IIDTag[] validTagsArray = new IIDTag[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
-    private static final IIDTag[] underValidTagsArray = new IIDTag[] { CutState.NONE };
-    private static final IIDTag[] overValidTagsArray = new IIDTag[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
+    private static final TagDataInterface[] validTagsArray = new TagDataInterface[] {CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC };
+    private static final TagDataInterface[] underValidTagsArray = new TagDataInterface[] { CutState.NONE };
+    private static final TagDataInterface[] overValidTagsArray = new TagDataInterface[] { CutState.NONE, CookState.NONE, IngredientUnit.UNIT, IngredientType.MISC, CutState.CHOPPED, CookState.RAW, IngredientUnit.UNIT };
 
     public static final IIDContainer IID_TEST_CONTAINER_1 = new IIDContainer("TestFood1", "Test Food 1", validTagsArray);
     public static final IIDContainer IID_TEST_CONTAINER_2 = new IIDContainer("TestFood2", "Test Food 2", validTagsArray);
@@ -61,8 +60,8 @@ public class IIDTests {
     public void emptyIIDContainerValidityTests() {
         // an IIDContainer holds a valid IID if it has one of each critical tag, and a nonempty nameTag and descriptorTag
         assertFalse(emptyIIDContainer().isValidIID());
-        assertFalse(new IIDContainer(new IIDTag[10]).isValidIID());
-        assertFalse(new IIDContainer(new ArrayList<IIDTag>(10)).isValidIID());
+        assertFalse(new IIDContainer(new TagDataInterface[10]).isValidIID());
+        assertFalse(new IIDContainer(new ArrayList<TagDataInterface>(10)).isValidIID());
     }
 
     @Test
@@ -246,20 +245,20 @@ public class IIDTests {
     @Test
     public void getTagsTest() {
         IIDContainer testContainer = getValidIIDContainer();
-        ArrayList<IIDTag> tagContainer = testContainer.getTags();
+        ArrayList<TagDataInterface> tagContainer = testContainer.getTags();
         assertArrayEquals(validTagsArray, tagContainer.toArray());
     }
 
     @Test
     public void getTagTest() {
         IIDContainer testContainer = getValidIIDContainer();
-        IIDTag CutStateTest = testContainer.getTag(CutState.class);
+        TagDataInterface CutStateTest = testContainer.getTag(CutState.class);
         assertTrue(CutStateTest.isSameTag(validTagsArray[0]));
-        IIDTag CookStateTest = testContainer.getTag(CookState.class);
+        TagDataInterface CookStateTest = testContainer.getTag(CookState.class);
         assertTrue(CookStateTest.isSameTag(validTagsArray[1]));
-        IIDTag IngredientUnitTest = testContainer.getTag(IngredientUnit.class);
+        TagDataInterface IngredientUnitTest = testContainer.getTag(IngredientUnit.class);
         assertTrue(IngredientUnitTest.isSameTag(validTagsArray[2]));
-        IIDTag IngredientTypeTest = testContainer.getTag(IngredientType.class);
+        TagDataInterface IngredientTypeTest = testContainer.getTag(IngredientType.class);
         assertTrue(IngredientTypeTest.isSameTag(validTagsArray[3]));
     }
 
@@ -401,8 +400,8 @@ public class IIDTests {
     public void addTagsTest() {
         IIDContainer testContainer = getValidIIDContainer();
         testContainer.unlock();
-        IIDTag[] testList = {CutState.WHOLE, CookState.RAW};
-        ArrayList<IIDTag> testList2 = new ArrayList(Arrays.asList(testList));
+        TagDataInterface[] testList = {CutState.WHOLE, CookState.RAW};
+        ArrayList<TagDataInterface> testList2 = new ArrayList(Arrays.asList(testList));
         testContainer.addTags(testList2);
         testContainer.lock();
         assertTrue(testContainer.hasTag(CutState.WHOLE));

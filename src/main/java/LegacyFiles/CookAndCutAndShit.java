@@ -5,7 +5,7 @@ import Interfaces.CookInterface;
 import Interfaces.CutInterface;
 import Tags.CookState;
 import Tags.CutState;
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 
 public class CookAndCutAndShit implements CookInterface, CutInterface {
     private String[] IIDTags;
@@ -119,7 +119,7 @@ public class CookAndCutAndShit implements CookInterface, CutInterface {
         return newIID;
     }
 
-    public String cook(String IID, IIDTag cookState) {
+    public String cook(String IID, TagDataInterface cookState) {
         if (!(cookState instanceof CookState)) { throw new InvalidRequestException(); }
         switch(cookState) {
             case CookState.RAW:
@@ -221,7 +221,7 @@ public class CookAndCutAndShit implements CookInterface, CutInterface {
         return newIID;
     }
 
-    public String cut(String IID, IIDTag cutState) {
+    public String cut(String IID, TagDataInterface cutState) {
         switch (cutState) {
             case CutState.WHOLE:
                 return "THIS SHOULDN'T BE WHOLE.";

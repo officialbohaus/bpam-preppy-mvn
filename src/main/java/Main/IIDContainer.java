@@ -1,11 +1,7 @@
 package Main;
 
 import Interfaces.IIDContainerInterface;
-import Interfaces.IIDTag;
-import Tags.CookState;
-import Tags.CutState;
-import Tags.IngredientType;
-import Tags.IngredientUnit;
+import Interfaces.TagDataInterface;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,9 +28,9 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
      */
 
     // critialTags are the classes, besides nameTag and descriptorTag, that must be included to be a valid IID
-    public static final Class<? extends IIDTag>[] criticalTags = new Class[] {IngredientType.class, IngredientUnit.class, CutState.class, CookState.class};
+//    public static final Class<? extends IIDTag>[] criticalTags = new Class[] {IngredientType.class, IngredientUnit.class, CutState.class, CookState.class};
 
-    private final List<IIDTag> tags;
+    private final List<TagDataInterface> tags;
     private static int containerCount = 0;
     private final int containerID;
     private int modCount;
@@ -51,26 +47,26 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
     // Constructors ==============================================================
 
     public IIDContainer() {
-        this(new ArrayList<IIDTag>());
+        this(new ArrayList<TagDataInterface>());
     }
 
-    public IIDContainer(IIDTag[] tags) {
+    public IIDContainer(TagDataInterface[] tags) {
         this(Arrays.asList(tags));
     }
 
-    public IIDContainer(List<IIDTag> tags) {
+    public IIDContainer(List<TagDataInterface> tags) {
         this("", "", tags);
 
     }
 
-    public IIDContainer(String nameTag, String descriptorTag, IIDTag[] tags) {
+    public IIDContainer(String nameTag, String descriptorTag, TagDataInterface[] tags) {
         this(nameTag, descriptorTag, Arrays.asList(tags));
     }
 
-    public IIDContainer(String nameTag, String descriptorTag, List<IIDTag> tags) {
+    public IIDContainer(String nameTag, String descriptorTag, List<TagDataInterface> tags) {
         this.nameTag = nameTag;
         this.descriptorTag = descriptorTag;
-        this.tags = new ArrayList<IIDTag>();
+        this.tags = new ArrayList<TagDataInterface>();
         this.addTags(tags);
         this.validIID = verifyValidIID();
         this.containerID = ++containerCount;
@@ -87,15 +83,15 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
     }
 
     @Override
-    public ArrayList<IIDTag> getTags() {
+    public ArrayList<TagDataInterface> getTags() {
         guardGet();
-        return new ArrayList<IIDTag>(tags);
+        return new ArrayList<TagDataInterface>(tags);
     }
 
     @Override
-    public <T extends IIDTag> IIDTag getTag(Class<T> tagEnum) {
+    public <T extends TagDataInterface> TagDataInterface getTag(Class<T> tagEnum) {
         guardGet();
-        for (IIDTag tag : tags) {
+        for (TagDataInterface tag : tags) {
             if (tag.getClass().equals(tagEnum))
                 return tag;
         }
@@ -138,7 +134,7 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
     }
 
     @Override
-    public boolean hasTag(IIDTag tag) {
+    public boolean hasTag(TagDataInterface tag) {
         return tags.contains(tag);
     }
 
@@ -146,12 +142,12 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
 
     // Setters ========================================================
 
-    public void addTag(IIDTag tag) {
+    public void addTag(TagDataInterface tag) {
         guardSet();
-        Iterator<IIDTag> tagsIter = tags.iterator();
+        Iterator<TagDataInterface> tagsIter = tags.iterator();
         boolean foundTag = false;
         while (tagsIter.hasNext() && !foundTag) {
-            IIDTag curr = tagsIter.next();
+            TagDataInterface curr = tagsIter.next();
             if ( curr != null && curr.isSameTagType(tag)) {
                 System.out.println("Overwriting tag: " + curr + " for new value: " + tag);
                 tagsIter.remove();
@@ -193,9 +189,9 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
     }
 
 
-    public void addTags(List<IIDTag> tags) {
+    public void addTags(List<TagDataInterface> tags) {
         guardSet();
-        for (IIDTag tag : tags) {
+        for (TagDataInterface tag : tags) {
             addTag(tag);
         }
     }
@@ -220,9 +216,9 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
         if (nameTag == null || descriptorTag == null || nameTag.isEmpty() || descriptorTag.isEmpty()) { return false; }
         for (Class classType : criticalTags) {
             boolean foundClass = false;
-            Iterator<IIDTag> tagIter = tags.iterator();
+            Iterator<TagDataInterface> tagIter = tags.iterator();
             while (tagIter.hasNext() && !foundClass) {
-                Class<? extends IIDTag> currTagClass = tagIter.next().getClass();
+                Class<? extends TagDataInterface> currTagClass = tagIter.next().getClass();
                 if (currTagClass.equals(classType)) { foundClass = true; }
             }
             if (!foundClass) { return false; }
@@ -249,7 +245,7 @@ public class   IIDContainer implements IIDContainerInterface, Serializable {
         msg += " - NameTag: " + nameTag + "\n";
         msg += " - DescriptorTag: " + descriptorTag + "\n";
         msg += " - NicknameTag: " + nicknameTag + "\n";
-        for (IIDTag tag : tags) {
+        for (TagDataInterface tag : tags) {
             msg += " - " + tag.getClass().getName() + ": " + tag.getTagString() + "\n";
         }
         msg += isValidIID() ? " VALID" : " INVALID";

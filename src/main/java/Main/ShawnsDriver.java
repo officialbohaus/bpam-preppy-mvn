@@ -1,7 +1,7 @@
 package Main;
 
 import Interfaces.IIDContainerInterface;
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
@@ -13,11 +13,11 @@ import java.util.Arrays;
 public class ShawnsDriver {
     public static void main(String[] args) {
 
-        IIDContainer beef = new IIDContainer("Beef", "I'm the beef.", new IIDTag[]{IngredientType.PROTEIN, CookState.GRILLED, CutState.SLICED, IngredientUnit.GRAM});
-        IIDContainer duck = new IIDContainer("Duck", "quack!", new IIDTag[]{IngredientType.PROTEIN, CookState.FRIED, CutState.WHOLE, IngredientUnit.MILLILITER});
-        IIDContainer chicken = new IIDContainer("Chicken", "Some chicken noise", new IIDTag[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
-        IIDContainer testSpinach = new IIDContainer("Spinach", "Just a vegetable", new IIDTag[]{IngredientType.VEGGIE, CookState.ROASTED, CutState.WHOLE, IngredientUnit.GRAM});
-        IIDContainer testChicken = new IIDContainer("Chicken", "Some other chicken noise", new IIDTag[]{IngredientType.PROTEIN, IngredientType.MISC, CookState.ROASTED, CutState.GROUND,IngredientUnit.GRAM});
+        IIDContainer beef = new IIDContainer("Beef", "I'm the beef.", new TagDataInterface[]{IngredientType.PROTEIN, CookState.GRILLED, CutState.SLICED, IngredientUnit.GRAM});
+        IIDContainer duck = new IIDContainer("Duck", "quack!", new TagDataInterface[]{IngredientType.PROTEIN, CookState.FRIED, CutState.WHOLE, IngredientUnit.MILLILITER});
+        IIDContainer chicken = new IIDContainer("Chicken", "Some chicken noise", new TagDataInterface[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
+        IIDContainer testSpinach = new IIDContainer("Spinach", "Just a vegetable", new TagDataInterface[]{IngredientType.VEGGIE, CookState.ROASTED, CutState.WHOLE, IngredientUnit.GRAM});
+        IIDContainer testChicken = new IIDContainer("Chicken", "Some other chicken noise", new TagDataInterface[]{IngredientType.PROTEIN, IngredientType.MISC, CookState.ROASTED, CutState.GROUND,IngredientUnit.GRAM});
 
         IIDContainer[] iidContainers = {beef, duck, chicken};
 

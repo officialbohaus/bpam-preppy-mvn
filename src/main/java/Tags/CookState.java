@@ -1,10 +1,10 @@
 package Tags;
 
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 
 import java.util.ArrayList;
 
-public enum CookState implements IIDTag {
+public enum CookState implements TagDataInterface {
     RAW("RAW"),
     BAKED("BAKE"),
     FRIED("FRY"),
@@ -64,19 +64,29 @@ public enum CookState implements IIDTag {
     }
 
     @Override
-    public boolean isSameTag(IIDTag tag) {
-        if (!(tag instanceof CookState))  { return false; }
-        return tag.getTagString().equals(this.getTagString());
+    public Class<? extends TagDataInterface> getTagClass() {
+        return CookState.class;
     }
 
-    @Override
-    public <T extends Enum<T>> boolean isSameTagType(Class<T> tagEnum) {
-        return tagEnum == this.getClass();
-    }
+//    @Override
+//    public boolean isSameTag(IIDTag tag) {
+//        if (!(tag instanceof CookState))  { return false; }
+//        return tag.getTagString().equals(this.getTagString());
+//    }
+//
+//    @Override
+//    public <T extends IIDTag> boolean isSameTagType(Class<T> tagClass) {
+//        return tagClass.equals(CookState.class);
+//    }
+//
+//    @Override
+//    public boolean isSameTagType(IIDTag tag) {
+//        Class<? extends IIDTag> tagClass = tag.getClass();
+//        return this.getClass().equals(tagClass);
+//    }
 
-    @Override
-    public boolean isSameTagType(IIDTag tag) {
-        Class<? extends IIDTag> tagClass = tag.getClass();
-        return this.getClass().equals(tagClass);
-    }
+//    @Override
+//    public String getEnumString() {
+//        return cookID;
+//    }
 }

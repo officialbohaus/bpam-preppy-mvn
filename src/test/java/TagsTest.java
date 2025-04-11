@@ -1,4 +1,4 @@
-import Interfaces.IIDTag;
+import Interfaces.TagDataInterface;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
@@ -40,7 +40,7 @@ public class TagsTest {
         IngredientType ingredientEnum = IngredientType.NUT;
         assertAll(() -> {
             assertEquals(IngredientType.class, ingredientEnum.getClass());
-            assertNotEquals(IIDTag.class, ingredientEnum.getClass());
+            assertNotEquals(TagDataInterface.class, ingredientEnum.getClass());
             assertTrue(ingredientEnum.isSameTagType(IngredientType.class));
             assertFalse(ingredientEnum.isSameTagType(CutState.class));
             assertTrue(ingredientEnum.isSameTag(IngredientType.NUT));
