@@ -13,18 +13,19 @@ public interface IIDSetInterface {
 
     public void addIngredient(IIDContainerInterface ingredient);
 
+    public void addIngredient(IIDContainerInterface ingredient, int quantity);
+
     public void addIngredients(IIDContainerInterface... ingredients);
+
+    public int getQuantity(IIDContainerInterface ingredient);
 
     public String getDescription();
 
     public String getName();
 
-    public int getSize();
-
     public IIDContainerInterface getIngredient(int index);
 
-//    public void add(IIDContainerInterface iidContainer);
-
+    public ArrayList<IIDContainerInterface> getIIDSet();
 
 
     public void remove(IIDContainerInterface iidContainer);

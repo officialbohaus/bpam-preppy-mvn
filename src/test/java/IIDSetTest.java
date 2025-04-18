@@ -36,7 +36,7 @@ class IIDSetTest {
      * - ArrayList<IIDContainer> getDifferenceSet()
      * - boolean isEqual(IngredientSetInterface otherSet)
      * - boolean contains(IIDContainer ingredient)
-     * - int getSize()
+     * - int size()
      *  */
 
     private IIDSet iidSet;
@@ -58,7 +58,7 @@ class IIDSetTest {
         assertAll(() -> {
             assertNull(iidSet.getName());
             assertNull(iidSet.getDescription());
-            assertEquals(0, iidSet.getSize());
+            assertEquals(0, iidSet.size());
         });
     }
 
@@ -69,7 +69,7 @@ class IIDSetTest {
         assertAll(() -> {
                     assertNull(iidSet.getName());
                     assertNull(iidSet.getDescription());
-                    assertEquals(3, iidSet.getSize());
+                    assertEquals(3, iidSet.size());
                     assertEquals(chicken, iidSet.getIngredient(2));
         });
     }
@@ -81,7 +81,7 @@ class IIDSetTest {
         assertAll(() -> {
             assertNull(iidSet.getName());
             assertNull(iidSet.getDescription());
-            assertEquals(3, iidSet.getSize());
+            assertEquals(3, iidSet.size());
             assertEquals(beef, iidSet.getIngredient(0));
         });
     }
@@ -93,7 +93,7 @@ class IIDSetTest {
         assertAll (() -> {
             assertEquals("Set One", iidSet.getName());
             assertEquals("So so eepy", iidSet.getDescription());
-            assertEquals(3, iidSet.getSize());
+            assertEquals(3, iidSet.size());
             assertEquals(beef, iidSet.getIngredient(0));
         });
     }
@@ -105,7 +105,7 @@ class IIDSetTest {
         assertAll (() -> {
             assertEquals("Set One", iidSet.getName());
             assertEquals("So so eepy", iidSet.getDescription());
-            assertEquals(3, iidSet.getSize());
+            assertEquals(3, iidSet.size());
             assertEquals(beef, iidSet.getIngredient(0));
         });
     }
@@ -404,17 +404,17 @@ class IIDSetTest {
     }
 
     @Test
-    void getSizeTest() {
+    void sizeTest() {
         iidSet = new IIDSet(containersArray);
-        assertEquals(3, iidSet.getSize());
+        assertEquals(3, iidSet.size());
 
         iidSet.addIngredient(rockyMountainOysters);
-        assertEquals(4, iidSet.getSize());
+        assertEquals(4, iidSet.size());
 
         iidSet.addIngredient(spinach);
-        assertEquals(5, iidSet.getSize());
+        assertEquals(5, iidSet.size());
 
         iidSet.remove(beef, chicken, rockyMountainOysters, spinach);
-        assertEquals(1, iidSet.getSize());
+        assertEquals(1, iidSet.size());
     }
 }

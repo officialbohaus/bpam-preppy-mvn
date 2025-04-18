@@ -1,7 +1,11 @@
 package Main;
 
+import Filters.FilterByDietary;
+import Filters.FilterByMethod;
+import Interfaces.FilterInterface;
 import Interfaces.IIDContainerInterface;
 import Interfaces.IIDTag;
+import LegacyFiles.OldIIDSet;
 import Tags.CookState;
 import Tags.CutState;
 import Tags.IngredientType;
@@ -9,6 +13,7 @@ import Tags.IngredientUnit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Filter;
 
 public class ShawnsDriver {
     public static void main(String[] args) {
@@ -17,33 +22,21 @@ public class ShawnsDriver {
         IIDContainer duck = new IIDContainer("Duck", "quack!", new IIDTag[]{IngredientType.PROTEIN, CookState.FRIED, CutState.WHOLE, IngredientUnit.MILLILITER});
         IIDContainer chicken = new IIDContainer("Chicken", "Some chicken noise", new IIDTag[]{IngredientType.PROTEIN, CookState.STEAMED, CutState.SHREDDED, IngredientUnit.GRAM});
         IIDContainer testSpinach = new IIDContainer("Spinach", "Just a vegetable", new IIDTag[]{IngredientType.VEGGIE, CookState.ROASTED, CutState.WHOLE, IngredientUnit.GRAM});
-        IIDContainer testChicken = new IIDContainer("Chicken", "Some other chicken noise", new IIDTag[]{IngredientType.PROTEIN, IngredientType.MISC, CookState.ROASTED, CutState.GROUND,IngredientUnit.GRAM});
+        IIDContainer testChicken = new IIDContainer("Chicken", "Some other chicken noise", new IIDTag[]{IngredientType.PROTEIN, IngredientType.MISC, CookState.ROASTED, CutState.GROUND, IngredientUnit.GRAM});
+        IIDContainer uninstantiatedIID;
 
-        IIDContainer[] iidContainers = {beef, duck, chicken};
+        IIDContainerInterface[] iids = {beef, duck, chicken, testSpinach, testChicken};
 
-        IIDContainer[] iidContainersToBeRemoved = {beef, duck};
+        OldIIDSet oldIIDSet = new OldIIDSet(iids);
+        IIDSet iidSet = new IIDSet(iids);
 
-        IIDContainer[] iidContainersToBeRemovedTest = {beef, testSpinach};
+        System.out.println("IIDCount: " + iidSet.size());
 
-        ArrayList<IIDContainer> ingredientSet = new ArrayList<>(Arrays.asList(iidContainers));
-        ArrayList<IIDContainer> otherSet = new ArrayList<>(Arrays.asList(iidContainersToBeRemoved));
-
-        IIDSet setOne = new IIDSet(iidContainers);
-        IIDSet setTwo = new IIDSet(iidContainersToBeRemoved);
-        IIDSet setThree = new IIDSet(iidContainersToBeRemovedTest);
-
-//        setOne.remove(beef, chicken, testSpinach);
-
-        for (IIDContainerInterface ingredient : setOne.getIngredientSet()) {
-            System.out.println(ingredient);
-        }
-
-//        ArrayList<IIDContainer> differenceSet = setOne.compare(setThree);
-//
-//        System.out.println(differenceSet);
-
-        System.out.println(setOne.getIngredients(2));
-
+        Recipe newRecipe = new Recipe("New Recipe", "This is a new recipe.", iidSet);
+        newRecipe.addStep("Chop some onions");
+        newRecipe.addStep("Sautee onions");
+        newRecipe.addStep("Voila");
+        System.out.println(newRecipe);
     }
 }
 

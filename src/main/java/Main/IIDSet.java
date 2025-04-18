@@ -4,9 +4,7 @@ import Exceptions.InvalidRequestException;
 import Interfaces.IIDContainerInterface;
 import Interfaces.IIDSetInterface;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 
 public class IIDSet implements IIDSetInterface {
 
@@ -14,6 +12,7 @@ public class IIDSet implements IIDSetInterface {
     private ArrayList<IIDContainerInterface> ingredientSet, differenceSet;
     private ArrayList<String> differenceString;
     private final ArrayList<Integer> modCounts;
+    private HashMap<IIDContainerInterface, Integer> ingredientQuantity;
     private Iterator<IIDContainer> iterator;
 
     // Test Constructors
@@ -37,22 +36,37 @@ public class IIDSet implements IIDSetInterface {
         this.description = description;
         ingredientSet = new ArrayList<>(iidContainerArrayList);
         modCounts = new ArrayList<>();
+        ingredientQuantity = new HashMap<>(ingredientSet.size());
 
         for (int index = 0; index < iidContainerArrayList.size(); index++) {
             modCounts.add(index, iidContainerArrayList.get(index).getModCount());
+            ingredientQuantity.put(ingredientSet.get(index), 0);
         }
     }
 
     public void addIngredient(IIDContainerInterface ingredient) {
+        addIngredient(ingredient, 0);
+    }
+
+    public void addIngredient(IIDContainerInterface ingredient, int quantity) {
         ingredientSet.add(ingredient);
+        ingredientQuantity.put(ingredient, quantity);
         modCounts.add(ingredient.getModCount());
     }
 
+    // FIX THIS. IT MAY HAVE SOME REDUNDANT LOGIC.
     public void addIngredients(IIDContainerInterface... ingredients) {
         for (IIDContainerInterface ingredient : ingredients) {
             ingredientSet.add(ingredient);
+            if (!ingredientQuantity.containsKey(ingredient)) {
+                ingredientQuantity.put(ingredient, 0);
+            }
             modCounts.add(ingredient.getModCount());
         }
+    }
+
+    public int getQuantity(IIDContainerInterface ingredient) {
+        return ingredientQuantity.get(ingredient);
     }
 
     public ArrayList<IIDContainerInterface> getIIDSet() {
@@ -103,7 +117,7 @@ public class IIDSet implements IIDSetInterface {
 //        ArrayList<IIDContainer> invalidContainers = new ArrayList<>();
 //        for (IIDContainer thisIngredient : ingredients) {
 
-    public void remove(IIDContainerInterface[] ingredients) {
+    public void remove(IIDContainerInterface... ingredients) {
         ArrayList<IIDContainerInterface> invalidContainers = new ArrayList<>();
         for (IIDContainerInterface thisIngredient : ingredients) {
 
@@ -177,8 +191,8 @@ public class IIDSet implements IIDSetInterface {
         return ingredientSet.contains(ingredient);
     }
 
-    public int getSize() {
-        return ingredientSet.size();
+    public int size() {
+        return ingredientQuantity.size();
     }
 
     private void incrementModCount(int index) {

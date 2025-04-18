@@ -975,7 +975,7 @@ Launcher Type: SUN_STANDARD
      bool FlightRecorder                           = true                                      {product} {management}
      uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
    size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
-    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+    uintx GCDrainStackTarsize                   = 64                                        {product} {ergonomic}
    size_t InitialHeapSize                          = 134217728                                 {product} {ergonomic}
    size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
    size_t MaxHeapSize                              = 2147483648                                {product} {ergonomic}
